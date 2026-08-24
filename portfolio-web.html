@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0B0F16">
-    <title>Digital Systems Portfolio | Zenqor Technologies</title>
-    <meta name="description" content="Explore Zenqor Technologies' digital systems portfolio, featuring our in-house HRMS/CDTS platform and custom enterprise business systems.">
+    <title>Our Clients | Zenqor Technologies</title>
+    <meta name="description" content="A showcase of businesses and organisations Zenqor Technologies has served — company registration, licensing, and in-house digital systems delivered for real clients across Malaysia.">
     <link rel="canonical" href="https://www.zenq0r.com/portfolio-web.html">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Digital Systems Portfolio | Zenqor Technologies">
-    <meta property="og:description" content="View our custom HRMS/CDTS platform and enterprise digital systems.">
+    <meta property="og:title" content="Our Clients | Zenqor Technologies">
+    <meta property="og:description" content="See the businesses and organisations Zenqor Technologies has worked with.">
     <meta property="og:image" content="https://www.zenq0r.com/logo.png">
     <meta property="og:url" content="https://www.zenq0r.com/portfolio-web.html">
 
@@ -38,7 +38,7 @@
                     </button>
                     <div class="dropdown-menu" id="portfolio-menu" role="menu">
                         <a href="licensing_permit.html" role="menuitem" data-i18n="nav_port_gaming">Licensing & Permits</a>
-                        <a href="portfolio-web.html" role="menuitem" class="nav-current" data-i18n="nav_port_web">Digital Systems</a>
+                        <a href="portfolio-web.html" role="menuitem" class="nav-current" data-i18n="nav_port_web">Our Client</a>
                     </div>
                 </div>
                 <a href="about.html" data-i18n="nav_about">About</a>
@@ -57,9 +57,9 @@
     <main id="main-content">
         <section class="hero-inner reveal">
             <div class="container hero-content reveal">
-                <div class="badge" data-i18n="nav_port_web">Digital Systems</div>
-                <h1 data-i18n="pw_hero_title">Digital Systems We've Built</h1>
-                <p class="hero-sub" data-i18n="pw_hero_sub">Custom HRMS/CDTS platforms and business automation systems developed in-house.</p>
+                <div class="badge" data-i18n="nav_port_web">Our Client</div>
+                <h1 data-i18n="pw_hero_title">Clients We've <span class='text-primary'>Worked With</span></h1>
+                <p class="hero-sub" data-i18n="pw_hero_sub">A showcase of the businesses and organisations Zenqor Technologies has served — company registration, licensing, and digital systems delivered for real clients across Malaysia.</p>
             </div>
         </section>
 
@@ -122,23 +122,23 @@
             return String(value == null ? '' : value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
         }
 
-        // Shown only if the admin hasn't published any digital systems case
-        // studies yet — mirrors the categories already described in the
-        // About/Services pages (Payroll, Client Document Tracking, Billing
-        // Automation) so the page never looks empty or broken.
-        // Bilingual (en/ms) since the admin dashboard's "portfolio_web"
-        // collection has no per-language fields — live admin-added items
-        // stay single-language until that schema is extended.
+        // Shown only if the admin hasn't published any client showcase entries
+        // yet — kept generic (industry/engagement categories, not named
+        // companies) since Zenqor's actual client roster is admin-managed data,
+        // not something to fabricate here. Bilingual (en/ms) since the admin
+        // dashboard's "portfolio_web" collection has no per-language fields —
+        // live admin-added items stay single-language until that schema is
+        // extended.
         const FALLBACK_ITEMS = [
             { imgUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
-              en: { tag: "HRMS PLATFORM", title: "HRMS/CDTS Portal", desc: "In-house Human Resource Management & Client Document Tracking System, built for our own operations and available to client businesses." },
-              ms: { tag: "PLATFORM HRMS", title: "Portal HRMS/CDTS", desc: "Sistem Pengurusan Sumber Manusia & Penjejakan Dokumen Klien dalaman kami sendiri, dibina untuk operasi kami dan tersedia kepada perniagaan klien." } },
+              en: { tag: "RETAIL & EVENTS", title: "Retail & Event Business Clients", desc: "Company registration, licensing and digital systems support for retail, F&B and event/activation businesses across Malaysia." },
+              ms: { tag: "RUNCIT & ACARA", title: "Klien Perniagaan Runcit & Acara", desc: "Sokongan pendaftaran syarikat, perlesenan dan sistem digital untuk perniagaan runcit, F&B dan acara/aktivasi di seluruh Malaysia." } },
             { imgUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
-              en: { tag: "PAYROLL AUTOMATION", title: "Payroll & Employee Management System", desc: "Automated payslip generation and employee records management tailored to Malaysian compliance requirements." },
-              ms: { tag: "AUTOMASI PAYROLL", title: "Sistem Pengurusan Gaji & Pekerja", desc: "Penjanaan slip gaji automatik dan pengurusan rekod pekerja yang disesuaikan dengan keperluan pematuhan Malaysia." } },
+              en: { tag: "SME & STARTUPS", title: "SME & Startup Clients", desc: "End-to-end business registration, licensing and in-house HRMS/CDTS systems delivered for growing SMEs and startups." },
+              ms: { tag: "PKS & STARTUP", title: "Klien PKS & Startup", desc: "Pendaftaran perniagaan menyeluruh, perlesenan dan sistem HRMS/CDTS dalaman untuk PKS dan startup yang sedang berkembang." } },
             { imgUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800",
-              en: { tag: "BUSINESS AUTOMATION", title: "Project & Billing Automation", desc: "Custom project tracking and billing automation tools designed around real business workflows." },
-              ms: { tag: "AUTOMASI PERNIAGAAN", title: "Automasi Projek & Bil", desc: "Alatan penjejakan projek dan automasi bil tersuai direka bentuk mengikut aliran kerja perniagaan sebenar." } },
+              en: { tag: "CORPORATE CLIENTS", title: "Corporate & Enterprise Clients", desc: "Government permit consulting, compliance advisory and custom digital systems delivered for established corporate clients." },
+              ms: { tag: "KLIEN KORPORAT", title: "Klien Korporat & Perusahaan", desc: "Konsultasi permit kerajaan, nasihat pematuhan dan sistem digital tersuai untuk klien korporat yang mantap." } },
         ];
 
         let loadedPortfolio = FALLBACK_ITEMS;

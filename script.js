@@ -138,7 +138,7 @@
     const translations = {
         en: {
             nav_home: "Home", nav_services: "Services", nav_portfolio: "Our Work", nav_about: "About", nav_faq: "FAQ", nav_contact: "Contact",
-            nav_port_gaming: "Licensing & Permits", nav_port_web: "Digital Systems",
+            nav_port_gaming: "Licensing & Permits", nav_port_web: "Our Client",
             nav_return: "Return & Refund Policy", nav_legal: "Legal Notices", nav_data: "Data Policy",
             hero_badge: "Business Consulting & Licensing", hero_title: "Empowering Your Business <br><span class='text-primary'>Through Consulting, Licensing & Digital Systems</span>",
             hero_sub: "Zenqor Technologies provides end-to-end business consulting — company registration, business licensing, and government permit applications for businesses across Malaysia.",
@@ -193,7 +193,7 @@
 
             pg_hero_title: "Licensing & <span class='text-primary'>Permit Consulting</span>",
             pg_hero_sub: "Business licences, government permits, and regulatory applications handled on behalf of our clients.",
-            pw_hero_title: "Digital Systems We've Built", pw_hero_sub: "Custom HRMS/CDTS platforms and business automation systems developed in-house.",
+            pw_hero_title: "Clients We've Worked With", pw_hero_sub: "A showcase of the businesses and organisations Zenqor Technologies has served — company registration, licensing, and digital systems delivered for real clients across Malaysia.",
 
             tos_content: "<h4>1. Acceptance of Terms</h4><p>By accessing and using services provided by Zenqor Technologies, you agree to be bound by these Terms of Service.</p><h4>2. Intellectual Property</h4><p>All systems, deliverables, and materials provided remain the intellectual property of Zenqor Technologies until full payment is received, after which a usage license (not ownership of the underlying source) is granted to the client.</p><h4>3. Limitation of Liability</h4><p>Zenqor Technologies is not liable for indirect damages arising from third-party regulatory decisions or the client's use of delivered systems outside the agreed scope.</p>",
             rp_content: "<h4>Consulting & Digital Services</h4><p>Due to the nature of consulting work, government submissions, and custom development, all engagements are final once the work has commenced or been delivered. Refunds are considered on a case-by-case basis only where the delivered work materially fails to meet the agreed scope.</p><h4>Requesting a Refund</h4><p>Contact us within 7 days of delivery at <a href='mailto:admin@zenq0r.com'>admin@zenq0r.com</a> with your engagement details and a description of the issue.</p>",
@@ -225,7 +225,7 @@
         },
         ms: {
             nav_home: "Utama", nav_services: "Perkhidmatan", nav_portfolio: "Kerja Kami", nav_about: "Tentang Kami", nav_faq: "FAQ", nav_contact: "Hubungi",
-            nav_port_gaming: "Lesen & Permit", nav_port_web: "Sistem Digital",
+            nav_port_gaming: "Lesen & Permit", nav_port_web: "Klien Kami",
             nav_return: "Polisi Pemulangan & Bayaran Balik", nav_legal: "Notis Undang-Undang", nav_data: "Polisi Data",
             hero_badge: "Perundingan Perniagaan & Perlesenan", hero_title: "Memperkasa Perniagaan Anda <br><span class='text-primary'>Melalui Perundingan, Perlesenan & Sistem Digital</span>",
             hero_sub: "Zenqor Technologies menyediakan perundingan perniagaan menyeluruh — pendaftaran syarikat, perlesenan perniagaan, dan permohonan permit kerajaan untuk perniagaan di seluruh Malaysia.",
@@ -280,7 +280,7 @@
 
             pg_hero_title: "Perundingan <span class='text-primary'>Lesen & Permit</span>",
             pg_hero_sub: "Lesen perniagaan, permit kerajaan, dan permohonan regulatori yang diuruskan bagi pihak klien kami.",
-            pw_hero_title: "Sistem Digital Yang Kami Bina", pw_hero_sub: "Platform HRMS/CDTS tersuai dan sistem automasi perniagaan dibangunkan secara dalaman.",
+            pw_hero_title: "Klien Yang Pernah Kami Bantu", pw_hero_sub: "Pameran perniagaan dan organisasi yang pernah dibantu oleh Zenqor Technologies — pendaftaran syarikat, perlesenan, dan sistem digital yang dihasilkan untuk klien sebenar di seluruh Malaysia.",
 
             tos_content: "<h4>1. Penerimaan Terma</h4><p>Dengan mengakses dan menggunakan perkhidmatan yang disediakan oleh Zenqor Technologies, anda bersetuju untuk terikat dengan Terma Perkhidmatan ini.</p><h4>2. Hak Harta Intelek</h4><p>Semua sistem, deliverables, dan bahan yang disediakan kekal sebagai hak harta intelek Zenqor Technologies sehingga bayaran penuh diterima, selepas itu lesen penggunaan (bukan pemilikan kod sumber) diberikan kepada pelanggan.</p><h4>3. Had Liabiliti</h4><p>Zenqor Technologies tidak bertanggungjawab atas kerugian tidak langsung akibat keputusan regulatori pihak ketiga atau penggunaan sistem oleh klien di luar skop yang dipersetujui.</p>",
             rp_content: "<h4>Perkhidmatan Perundingan & Digital</h4><p>Disebabkan sifat kerja perundingan, penyerahan kepada agensi kerajaan, dan pembangunan tersuai, semua penglibatan adalah muktamad sebaik sahaja kerja dimulakan atau dihantar. Bayaran balik dipertimbangkan mengikut kes demi kes hanya jika kerja yang dihantar gagal memenuhi skop yang dipersetujui.</p><h4>Memohon Bayaran Balik</h4><p>Hubungi kami dalam masa 7 hari selepas penghantaran di <a href='mailto:admin@zenq0r.com'>admin@zenq0r.com</a> dengan butiran penglibatan dan penerangan isu.</p>",
@@ -620,7 +620,7 @@
                     </button>
                     <div class="dropdown-menu" id="portfolio-menu">
                         <a href="licensing_permit.html" data-i18n="nav_port_gaming">Licensing & Permits</a>
-                        <a href="portfolio-web.html" data-i18n="nav_port_web">Digital Systems</a>
+                        <a href="portfolio-web.html" data-i18n="nav_port_web">Our Client</a>
                     </div>
                 </div>
                 <a href="about.html" data-i18n="nav_about">About</a>

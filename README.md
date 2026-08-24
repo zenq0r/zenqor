@@ -37,7 +37,7 @@
 
 1. **Dynamic Theme Manager:** Persistent Dark and Light modes utilizing `localStorage`.
 2. **Multi-Language System:** Seamless toggling between English and Bahasa Melayu without page reloads.
-3. **Interactive Portfolio:** Dedicated showcases for both Licensing & Permit consulting work and in-house Digital Systems (HRMS/CDTS).
+3. **Interactive Portfolio:** Dedicated showcases for Licensing & Permit consulting work and for the clients Zenqor Technologies has served.
 
 <br>
 
@@ -54,7 +54,7 @@ zenqor-tech/
 ├── services.html           # Consulting, Licensing & Digital System Services
 ├── licensing_permit.html   # Licensing & Permit Case Studies
 ├── portfolio-gaming.html   # Legacy URL — redirect stub to licensing_permit.html
-├── portfolio-web.html      # Digital Systems (HRMS/CDTS) Projects
+├── portfolio-web.html      # Our Clients showcase
 ├── script.js               # Core logic (Translation & Animations)
 ├── styles.css              # Global styling & CSS variables
 └── SECURITY.md             # Vulnerability reporting policy
