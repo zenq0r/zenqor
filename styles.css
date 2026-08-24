@@ -481,6 +481,13 @@ footer { border-top: 1px solid var(--border-color); padding: 30px 0 15px; backgr
     .why-choose-grid { grid-template-columns: 1fr; }
     .why-choose-media { position: relative; top: 0; }
     .why-choose-media-frame { max-height: 420px; }
+    /* Tablet (iPad-width) comfort pass: the 4-up tech grid and 3-up portfolio
+       grid get cramped between 769-1024px, so drop to 2 columns here. Excludes
+       .our-clients-grid (portfolio-web.html), which already handles its own
+       responsive columns via auto-fill. */
+    .tech-stack-container { grid-template-columns: repeat(2, 1fr); }
+    .portfolio-grid:not(.our-clients-grid) { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -495,6 +502,22 @@ footer { border-top: 1px solid var(--border-color); padding: 30px 0 15px; backgr
     .cookie-consent-inner { flex-direction: column; align-items: stretch; text-align: center; }
     .cookie-consent-actions { justify-content: center; }
     .why-choose-item { flex-direction: column; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .hero-actions .btn { width: 100%; }
+}
+
+/* Small phones (iPhone SE/older Android, ~320-480px wide) — tighten container
+   padding and shrink the logo just enough that "ZenqorTechnologies" + the
+   hamburger button never fight for space in the fixed top bar. */
+@media (max-width: 480px) {
+    .container { padding: 0 16px; }
+    .logo-text { font-size: 1.08rem; }
+    .nav-logo-img { height: 28px; width: auto; margin-right: 8px; }
+    .nav-container { min-height: 68px; gap: 6px; }
+    .hero-inner, .hero { padding-top: 100px; }
+    .service-card, .tech-category, .contact-info, .contact-form { padding: 22px 18px; }
+    .port-content { padding: 16px; }
+    .our-clients-grid .port-content { padding: 14px 16px 16px; }
 }
 
 .nav-logo-img { height: 34px; width: auto; margin-right: 10px; vertical-align: middle; }
