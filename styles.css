@@ -265,6 +265,79 @@ p { color: var(--text-secondary); }
    filled in Company Name/Date Conducted (see renderGrid's metaLine). */
 .port-meta { font-size: 0.8rem; font-weight: 600; color: var(--primary-blue); margin: 4px 0 10px; }
 
+/* =========================================
+   2b. OUR CLIENTS — COMPACT GRID + MEDIA GALLERY + LIGHTBOX
+   Scoped to .our-clients-grid (portfolio-web.html only) so licensing_permit.html /
+   portfolio-gaming.html, which reuse the base .portfolio-grid/.portfolio-item/.tag
+   classes, are completely unaffected.
+   ========================================= */
+.our-clients-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--space-sm); }
+.our-clients-grid .portfolio-item { border-radius: var(--radius-md); }
+.our-clients-grid .port-img-wrap { aspect-ratio: 4 / 3; cursor: pointer; }
+.our-clients-grid .port-img-wrap.orientation-portrait { aspect-ratio: 3 / 4; }
+.our-clients-grid .port-img-wrap.orientation-square { aspect-ratio: 1 / 1; }
+.our-clients-grid .port-img-wrap:hover .port-img { transform: scale(1.045); }
+.our-clients-grid .port-img { transition: transform 0.45s var(--ease); }
+.our-clients-grid .port-content { padding: 16px 18px 18px; }
+.our-clients-grid .tag { margin-bottom: 8px; font-size: 0.68rem; padding: 4px 10px; }
+.our-clients-grid .portfolio-item h3 { font-size: 1.02rem; line-height: 1.35; }
+.our-clients-grid .port-meta { margin: 2px 0 6px; font-size: 0.76rem; }
+.our-clients-grid .portfolio-item p:not(.port-meta) { font-size: 0.85rem; line-height: 1.55; }
+
+/* Media-count badge + play icon overlay, shown on the cover thumbnail when an
+   item has 2+ attached media files (see renderGrid() in portfolio-web.html). */
+.media-count-badge {
+    position: absolute; top: 10px; right: 10px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(11, 15, 22, 0.72); backdrop-filter: blur(4px);
+    color: #fff; font-size: 0.72rem; font-weight: 700;
+    padding: 4px 10px; border-radius: var(--radius-pill);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.media-play-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+}
+.media-play-overlay i {
+    font-size: 2.1rem; color: rgba(255, 255, 255, 0.95);
+    filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.55));
+}
+
+/* Lightbox — single shared instance, opened on card click */
+.pw-lightbox {
+    position: fixed; inset: 0; z-index: 2000; display: none;
+    align-items: center; justify-content: center;
+    background: rgba(5, 6, 10, 0.92); backdrop-filter: blur(6px);
+    padding: 24px;
+}
+.pw-lightbox.is-open { display: flex; }
+.pw-lightbox-inner { position: relative; width: 100%; max-width: 980px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.pw-lightbox-stage { position: relative; width: 100%; display: flex; align-items: center; justify-content: center; min-height: 220px; }
+.pw-lightbox-stage img, .pw-lightbox-stage video {
+    max-width: 100%; max-height: 74vh; border-radius: var(--radius-md);
+    box-shadow: var(--card-shadow); background: #000; display: block;
+}
+.pw-lightbox-close, .pw-lightbox-prev, .pw-lightbox-next {
+    position: absolute; display: flex; align-items: center; justify-content: center;
+    width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+    background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-color-strong);
+    color: var(--text-primary); font-size: 1rem; transition: background-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.pw-lightbox-close:hover, .pw-lightbox-prev:hover, .pw-lightbox-next:hover { background: var(--primary-soft); color: var(--primary-hover); }
+.pw-lightbox-close { top: -4px; right: -4px; }
+.pw-lightbox-prev { left: -4px; top: 50%; transform: translateY(-50%); }
+.pw-lightbox-next { right: -4px; top: 50%; transform: translateY(-50%); }
+.pw-lightbox-prev:hover, .pw-lightbox-next:hover { transform: translateY(-50%) scale(1.06); }
+.pw-lightbox-meta { text-align: center; max-width: 720px; }
+.pw-lightbox-meta h4 { font-size: 1.05rem; margin-bottom: 4px; }
+.pw-lightbox-meta p { color: var(--text-secondary); font-size: 0.85rem; margin: 0; }
+.pw-lightbox-counter { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.03em; }
+@media (max-width: 640px) {
+    .pw-lightbox-prev, .pw-lightbox-next { width: 36px; height: 36px; font-size: 0.9rem; }
+    .pw-lightbox-prev { left: 4px; } .pw-lightbox-next { right: 4px; } .pw-lightbox-close { top: 6px; right: 6px; }
+}
+
 .agency-marquee { display: flex; flex-direction: column; gap: var(--space-sm); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); }
 .agency-track { display: flex; gap: var(--space-sm); width: max-content; animation: agency-scroll-left 48s linear infinite; }
 .agency-track-reverse { animation-name: agency-scroll-right; animation-duration: 54s; }
