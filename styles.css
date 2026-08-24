@@ -406,12 +406,21 @@ p { color: var(--text-secondary); }
    while the four-card list scrolls past it.
    Visually placed on the left via `order` while staying second in the DOM, so the
    text content (which matters more for screen readers/SEO) still reads first. */
-.why-choose-media { order: -1; position: sticky; top: 96px; aspect-ratio: 948 / 1660; width: 100%; max-height: 640px; background: var(--bg-color); }
+.why-choose-media { order: -1; position: sticky; top: 96px; width: 100%; }
+/* The aspect-ratio/max-height box now lives on .why-choose-media-frame (not the
+   outer .why-choose-media) so the name/title caption below it isn't squeezed into
+   the same fixed box as the photo. */
+.why-choose-media-frame { aspect-ratio: 948 / 1660; width: 100%; max-height: 640px; background: var(--bg-color); }
 /* object-fit: contain (not cover) — this photo has its own "ZENQOR TECHNOLOGIES"
    wordmark baked into the top of the frame, and cover was cropping it off the left
    and right edges whenever the column was narrower than the source photo. contain
    guarantees the full frame, wordmark included, is always visible. */
-.why-choose-media img { width: 100%; height: 100%; object-fit: contain; display: block; border-radius: var(--radius-lg); }
+.why-choose-media-frame img { width: 100%; height: 100%; object-fit: contain; display: block; border-radius: var(--radius-lg); }
+/* Name/title caption under the portrait — identifies who's pictured instead of
+   leaving the photo anonymous. */
+.why-choose-caption { text-align: center; margin-top: 14px; }
+.why-choose-caption-name { font-size: 1.02rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+.why-choose-caption-title { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--primary-blue); line-height: 1.5; }
 
 /* =========================================
    7. FOOTER & WIDGETS
@@ -470,7 +479,8 @@ footer { border-top: 1px solid var(--border-color); padding: 30px 0 15px; backgr
     .stat-card:nth-child(2)::after { display: none; }
     .trust-bar-grid, .process-steps { grid-template-columns: repeat(2, 1fr); }
     .why-choose-grid { grid-template-columns: 1fr; }
-    .why-choose-media { position: relative; top: 0; max-height: 420px; }
+    .why-choose-media { position: relative; top: 0; }
+    .why-choose-media-frame { max-height: 420px; }
 }
 
 @media (max-width: 768px) {
