@@ -619,7 +619,7 @@
                         <span data-i18n="nav_portfolio">Portfolio</span> <i class="fas fa-chevron-down" style="font-size: 0.8em; margin-left: 5px;"></i>
                     </button>
                     <div class="dropdown-menu" id="portfolio-menu">
-                        <a href="portfolio-gaming.html" data-i18n="nav_port_gaming">Licensing & Permits</a>
+                        <a href="licensing_permit.html" data-i18n="nav_port_gaming">Licensing & Permits</a>
                         <a href="portfolio-web.html" data-i18n="nav_port_web">Digital Systems</a>
                     </div>
                 </div>

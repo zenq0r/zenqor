@@ -52,7 +52,8 @@ zenqor-tech/
 ├── index.html              # Main Landing Page
 ├── about.html              # Company Vision & Tech Stack
 ├── services.html           # Consulting, Licensing & Digital System Services
-├── portfolio-gaming.html   # Licensing & Permit Case Studies
+├── licensing_permit.html   # Licensing & Permit Case Studies
+├── portfolio-gaming.html   # Legacy URL — redirect stub to licensing_permit.html
 ├── portfolio-web.html      # Digital Systems (HRMS/CDTS) Projects
 ├── script.js               # Core logic (Translation & Animations)
 ├── styles.css              # Global styling & CSS variables

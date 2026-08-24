@@ -251,7 +251,7 @@ p { color: var(--text-secondary); }
 
 .portfolio-item { overflow: hidden; display: flex; flex-direction: column; }
 /* The wrapper's aspect-ratio adapts to each item's own image orientation (set via
-   JS after the image loads — see portfolio-web.html/portfolio-gaming.html), so a
+   JS after the image loads — see portfolio-web.html/licensing_permit.html), so a
    portrait photo gets a taller card instead of being cropped into a landscape strip. */
 .port-img-wrap { position: relative; overflow: hidden; border-bottom: 1px solid var(--border-color); aspect-ratio: 16 / 9; background: var(--border-color); }
 .port-img-wrap.orientation-portrait { aspect-ratio: 3 / 4; }
