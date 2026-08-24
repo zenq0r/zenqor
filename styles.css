@@ -260,6 +260,10 @@ p { color: var(--text-secondary); }
 .port-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .port-content { padding: 22px; }
 .tag { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; background: var(--primary-soft); color: var(--primary-blue); padding: 5px 12px; border-radius: var(--radius-pill); display: inline-block; margin-bottom: 14px; border: 1px solid rgba(20, 184, 166, 0.3); }
+/* Company name + date line on portfolio-web.html/licensing_permit.html cards —
+   sits between the title and the description, only rendered when the admin
+   filled in Company Name/Date Conducted (see renderGrid's metaLine). */
+.port-meta { font-size: 0.8rem; font-weight: 600; color: var(--primary-blue); margin: 4px 0 10px; }
 
 .agency-marquee { display: flex; flex-direction: column; gap: var(--space-sm); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%); }
 .agency-track { display: flex; gap: var(--space-sm); width: max-content; animation: agency-scroll-left 48s linear infinite; }

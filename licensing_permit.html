@@ -147,6 +147,18 @@
         // from Firestore is a flat {tag, title, desc} object with no language variant.
         function pick(item, lang) { return item[lang] ? item[lang] : item; }
 
+        // companyName/eventDate are flat fields on the live Firestore doc (not
+        // per-language, same as imgUrl) — set by the admin's Website Content
+        // editor. Older items saved before this field existed simply have
+        // neither, so the meta line collapses to nothing rather than showing
+        // an empty "· " artifact.
+        function formatEventDate(value, lang) {
+            if (!value) return '';
+            const parsed = new Date(value + 'T00:00:00');
+            if (isNaN(parsed.getTime())) return '';
+            return new Intl.DateTimeFormat(lang === 'ms' ? 'ms-MY' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(parsed);
+        }
+
         function renderGrid(items) {
             loadedPortfolio = items;
             const lang = currentLang();
@@ -155,12 +167,15 @@
             let delay = 0;
             items.forEach((data) => {
                 const text = pick(data, lang);
+                const metaBits = [data.companyName, formatEventDate(data.eventDate, lang)].filter(Boolean);
+                const metaLine = metaBits.length ? `<p class="port-meta">${escapeHtml(metaBits.join(' · '))}</p>` : '';
                 grid.innerHTML += `
                     <article class="portfolio-item card-style reveal active hover-up" style="transition-delay: ${delay}s;">
                         <div class="port-img-wrap"><img class="port-img" alt="${escapeHtml(text.title)} Project Image" loading="lazy"></div>
                         <div class="port-content">
                             <span class="tag">${escapeHtml(text.tag)}</span>
                             <h3>${escapeHtml(text.title)}</h3>
+                            ${metaLine}
                             <p style="color: var(--text-secondary); font-size: 0.9rem;">${escapeHtml(text.desc)}</p>
                         </div>
                     </article>`;
