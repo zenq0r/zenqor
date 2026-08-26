@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.zenq0r.com">
+  <a href="https://www.zenqor.com.my">
     <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=15&pause=2000&color=32CD32&center=true&vCenter=true&width=600&repeat=false&lines=Business+Registration+%26+Licensing.;Government+Permit+Consulting.;Custom+HRMS%2FCDTS+Digital+Systems." alt="Typing Animation" />
   </a>
 </p>
@@ -68,6 +68,6 @@ zenqor-tech/
   <sub>
     Managed by <strong>Zenqor Technologies</strong><br>
     SSM: 202603157897 (JM1045730-D)<br>
-    Built with innovation in Malaysia · <a href="https://www.zenq0r.com">www.zenq0r.com</a>
+    Built with innovation in Malaysia · <a href="https://www.zenqor.com.my">www.zenqor.com.my</a>
   </sub>
 </p>
