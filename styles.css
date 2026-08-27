@@ -443,8 +443,9 @@ footer { border-top: 1px solid var(--border-color); padding: 30px 0 15px; backgr
 .cookie-consent-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .cookie-consent-text { color: var(--text-secondary); font-size: 0.86rem; line-height: 1.6; max-width: 640px; }
 .cookie-consent-text a { color: var(--primary-blue); text-decoration: underline; }
-.cookie-consent-actions { display: flex; gap: 10px; flex-shrink: 0; }
-.cookie-preferences-btn { appearance: none; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; font: inherit; font-size: 0.82rem; padding: 8px; text-decoration: underline; text-underline-offset: 3px; }
+.cookie-consent-actions { display: flex; flex-wrap: wrap; gap: 10px; flex-shrink: 0; }
+.cookie-consent-actions .btn { min-width: 140px; }
+.cookie-preferences-btn { appearance: none; border: none; background: transparent; color: var(--text-secondary); cursor: pointer; font: inherit; font-size: 0.82rem; min-width: 144px; padding: 8px; text-decoration: underline; text-underline-offset: 3px; }
 .cookie-preferences-btn:hover, .cookie-preferences-btn:focus-visible { color: var(--primary-blue); }
 .cookie-settings-trigger { position: fixed; left: 18px; bottom: 18px; z-index: 1001; border: 1px solid var(--border-color); border-radius: 999px; background: rgba(22, 30, 46, 0.96); color: var(--text-secondary); cursor: pointer; font: inherit; font-size: 0.78rem; padding: 9px 13px; box-shadow: var(--card-shadow); }
 .cookie-settings-trigger:hover, .cookie-settings-trigger:focus-visible { color: #fff; border-color: var(--primary-blue); }
