@@ -8,10 +8,24 @@
     <script defer src="/_vercel/insights/script.js"></script>
     <!-- End Vercel Web Analytics -->
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXD7FVE8G9"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+      try {
+        if (localStorage.getItem('zenqor-cookie-consent') === 'accepted') {
+          gtag('consent', 'update', { 'analytics_storage': 'granted' });
+        }
+      } catch (error) { /* Storage may be unavailable in private browsing. */ }
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXD7FVE8G9"></script>
+    <script>
       gtag('js', new Date());
       gtag('config', 'G-SXD7FVE8G9');
     </script>

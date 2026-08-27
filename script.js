@@ -153,8 +153,8 @@
             process_3_t: "Submission & Follow-up", process_3_d: "We submit your application and liaise directly with the relevant authorities on your behalf.",
             process_4_t: "Approval & Handover", process_4_d: "Once approved, we hand over all official documents and remain available for ongoing support.",
             process_note: "Free initial consultation &middot; Transparent quote before any work begins",
-            cookie_text: "We use cookies to improve your experience and understand site traffic. See our <a href=\"data-policy.html\">Data Policy</a> for details.",
-            cookie_accept: "Accept", cookie_decline: "Decline",
+            cookie_text: "We use essential cookies to keep this website working. With your permission, analytics cookies help us understand site traffic. See our <a href=\"data-policy.html\">Data Policy</a> for details.",
+            cookie_accept: "Accept analytics", cookie_decline: "Reject", cookie_manage: "Manage preferences",
 
             about_title: "Your Trusted Partner <span class='text-primary'>in Business Growth</span>",
             about_sub: "We combine regulatory and licensing expertise with in-house technology to help businesses register, get licensed, stay compliant, and operate efficiently — all under one roof.",
@@ -206,7 +206,7 @@
 
             dp_title: "Privacy & Data Protection",
             dp_desc1: "At Zenqor Technologies, system security and user privacy are our top priorities. We are committed to protecting the personal and business data you provide us in accordance with applicable data protection regulations.",
-            dp_desc2: "We collect only essential information required to deliver our consulting, licensing, and digital system services. We do not sell or share your personal data with unauthorized third parties. For any vulnerability reports or data deletion requests, please contact us directly at admin@zenqor.com.my.",
+            dp_desc2: "We collect only essential information required to deliver our consulting, licensing, and digital system services. With your consent, we also use Google Analytics to understand aggregate site traffic and improve the website. You can accept, reject, or change this choice at any time through Cookie Settings. We do not sell or share your personal data with unauthorized third parties. For any vulnerability reports or data deletion requests, please contact us directly at admin@zenqor.com.my.",
 
             footer_copy: "© 2026 Zenqor Technologies (Malaysia). All rights reserved.",
 
@@ -246,8 +246,8 @@
             process_3_t: "Penghantaran & Susulan", process_3_d: "Kami menghantar permohonan anda dan berhubung terus dengan pihak berkuasa berkaitan bagi pihak anda.",
             process_4_t: "Kelulusan & Penyerahan", process_4_d: "Setelah diluluskan, kami menyerahkan semua dokumen rasmi dan sedia membantu untuk sokongan berterusan.",
             process_note: "Perundingan awal percuma &middot; Sebutharga telus sebelum sebarang kerja bermula",
-            cookie_text: "Kami menggunakan kuki untuk menambah baik pengalaman anda dan memahami trafik laman. Lihat <a href=\"data-policy.html\">Polisi Data</a> kami untuk maklumat lanjut.",
-            cookie_accept: "Terima", cookie_decline: "Tolak",
+            cookie_text: "Kami menggunakan kuki penting untuk memastikan laman ini berfungsi. Dengan kebenaran anda, kuki analitik membantu kami memahami trafik laman. Lihat <a href=\"data-policy.html\">Polisi Data</a> kami untuk maklumat lanjut.",
+            cookie_accept: "Terima analitik", cookie_decline: "Tolak", cookie_manage: "Urus pilihan",
 
             about_title: "Rakan Kongsi Dipercayai <span class='text-primary'>Dalam Pertumbuhan Perniagaan</span>",
             about_sub: "Kami menggabungkan kepakaran regulatori dan perlesenan dengan teknologi dalaman untuk membantu perniagaan mendaftar, mendapat lesen, kekal patuh, dan beroperasi dengan cekap — semuanya di bawah satu bumbung.",
@@ -299,7 +299,7 @@
 
             dp_title: "Privasi & Perlindungan Data",
             dp_desc1: "Di Zenqor Technologies, keselamatan sistem dan privasi pengguna adalah keutamaan utama kami. Kami komited untuk melindungi data peribadi dan perniagaan yang anda berikan mengikut peraturan perlindungan data yang berkuat kuasa.",
-            dp_desc2: "Kami hanya mengumpul maklumat penting yang diperlukan untuk menyampaikan perkhidmatan perundingan, perlesenan, dan sistem digital kami. Kami tidak menjual atau berkongsi data peribadi anda dengan pihak ketiga yang tidak dibenarkan. Untuk laporan kelemahan atau permintaan pemadaman data, sila hubungi kami terus di admin@zenqor.com.my.",
+            dp_desc2: "Kami hanya mengumpul maklumat penting yang diperlukan untuk menyampaikan perkhidmatan perundingan, perlesenan, dan sistem digital kami. Dengan kebenaran anda, kami turut menggunakan Google Analytics untuk memahami trafik laman secara agregat dan menambah baik laman web. Anda boleh menerima, menolak, atau menukar pilihan ini pada bila-bila masa melalui Tetapan Kuki. Kami tidak menjual atau berkongsi data peribadi anda dengan pihak ketiga yang tidak dibenarkan. Untuk laporan kelemahan atau permintaan pemadaman data, sila hubungi kami terus di admin@zenqor.com.my.",
 
             footer_copy: "© 2026 Zenqor Technologies (Malaysia). Hak cipta terpelihara.",
 
@@ -506,32 +506,141 @@
     }
 
     // ─────────────────────────────────────────────
-    // 5d. PDPA COOKIE CONSENT — gates analytics/pageview logging until the
-    //    visitor accepts. Choice is remembered in localStorage.
+    // 5d. COOKIE CONSENT — aligns the existing banner with Google Consent Mode
+    //    v2. Analytics remains denied until the visitor explicitly accepts.
     // ─────────────────────────────────────────────
     function initCookieConsent() {
         const banner = document.getElementById('cookie-consent');
         const acceptBtn = document.getElementById('cookie-accept');
         const declineBtn = document.getElementById('cookie-decline');
-        const consent = localStorage.getItem('zenqor-cookie-consent');
+        if (!banner || !acceptBtn || !declineBtn) return;
 
+        const consentKey = 'zenqor-cookie-consent';
+        const consentCopy = {
+            en: {
+                manage: 'Manage preferences', trigger: 'Cookie settings', title: 'Cookie preferences',
+                intro: 'Choose whether Zenqor Technologies may use analytics cookies to understand site traffic.',
+                analytics: 'Analytics cookies', analyticsDesc: 'Help us understand aggregate site traffic and improve this website.',
+                essential: 'Essential cookies', essentialDesc: 'Always active — required for security and core website functions.',
+                save: 'Save choices', accept: 'Accept analytics', reject: 'Reject'
+            },
+            ms: {
+                manage: 'Urus pilihan', trigger: 'Tetapan kuki', title: 'Pilihan kuki',
+                intro: 'Pilih sama ada Zenqor Technologies boleh menggunakan kuki analitik untuk memahami trafik laman.',
+                analytics: 'Kuki analitik', analyticsDesc: 'Membantu kami memahami trafik laman secara agregat dan menambah baik laman ini.',
+                essential: 'Kuki penting', essentialDesc: 'Sentiasa aktif — diperlukan untuk keselamatan dan fungsi utama laman.',
+                save: 'Simpan pilihan', accept: 'Terima analitik', reject: 'Tolak'
+            }
+        };
+
+        const preferencesBtn = document.createElement('button');
+        preferencesBtn.type = 'button';
+        preferencesBtn.id = 'cookie-preferences';
+        preferencesBtn.className = 'cookie-preferences-btn';
+        preferencesBtn.setAttribute('data-i18n', 'cookie_manage');
+        preferencesBtn.textContent = consentCopy.en.manage;
+        declineBtn.before(preferencesBtn);
+
+        document.body.insertAdjacentHTML('beforeend', `
+            <button type="button" id="cookie-settings-trigger" class="cookie-settings-trigger" hidden></button>
+            <div id="cookie-settings-modal" class="cookie-settings-modal" hidden>
+                <div class="cookie-settings-panel" role="dialog" aria-modal="true" aria-labelledby="cookie-settings-title">
+                    <div class="cookie-settings-heading">
+                        <h2 id="cookie-settings-title"></h2>
+                        <button type="button" id="cookie-settings-close" class="cookie-settings-close" aria-label="Close">&times;</button>
+                    </div>
+                    <p id="cookie-settings-intro"></p>
+                    <div class="cookie-setting-row">
+                        <div><strong id="cookie-essential-label"></strong><span id="cookie-essential-desc"></span></div>
+                        <span class="cookie-always-on">Always on</span>
+                    </div>
+                    <label class="cookie-setting-row cookie-setting-toggle" for="cookie-analytics-toggle">
+                        <div><strong id="cookie-analytics-label"></strong><span id="cookie-analytics-desc"></span></div>
+                        <input id="cookie-analytics-toggle" type="checkbox">
+                    </label>
+                    <div class="cookie-settings-actions">
+                        <button type="button" id="cookie-settings-reject" class="btn btn-outline btn-sm"></button>
+                        <button type="button" id="cookie-settings-save" class="btn btn-outline btn-sm"></button>
+                        <button type="button" id="cookie-settings-accept" class="btn btn-primary btn-sm"></button>
+                    </div>
+                </div>
+            </div>`);
+
+        const modal = document.getElementById('cookie-settings-modal');
+        const settingsTrigger = document.getElementById('cookie-settings-trigger');
+        const analyticsToggle = document.getElementById('cookie-analytics-toggle');
+        const getConsent = () => {
+            try { return localStorage.getItem(consentKey); } catch (error) { return null; }
+        };
+        const updateGoogleConsent = (analyticsGranted) => {
+            if (typeof window.gtag !== 'function') return;
+            window.gtag('consent', 'update', {
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'analytics_storage': analyticsGranted ? 'granted' : 'denied'
+            });
+        };
+        const refreshSettingsCopy = () => {
+            const copy = consentCopy[currentLang] || consentCopy.en;
+            preferencesBtn.textContent = copy.manage;
+            settingsTrigger.textContent = copy.trigger;
+            document.getElementById('cookie-settings-title').textContent = copy.title;
+            document.getElementById('cookie-settings-intro').textContent = copy.intro;
+            document.getElementById('cookie-essential-label').textContent = copy.essential;
+            document.getElementById('cookie-essential-desc').textContent = copy.essentialDesc;
+            document.getElementById('cookie-analytics-label').textContent = copy.analytics;
+            document.getElementById('cookie-analytics-desc').textContent = copy.analyticsDesc;
+            document.querySelector('.cookie-always-on').textContent = currentLang === 'ms' ? 'Sentiasa aktif' : 'Always on';
+            document.getElementById('cookie-settings-save').textContent = copy.save;
+            document.getElementById('cookie-settings-accept').textContent = copy.accept;
+            document.getElementById('cookie-settings-reject').textContent = copy.reject;
+        };
+        const setConsent = (value) => {
+            try { localStorage.setItem(consentKey, value); } catch (error) { /* Keep the current-page choice if storage is unavailable. */ }
+            const accepted = value === 'accepted';
+            updateGoogleConsent(accepted);
+            banner.classList.remove('show');
+            modal.hidden = true;
+            settingsTrigger.hidden = false;
+            if (accepted) {
+                applyGoogleAnalytics();
+                logPageview();
+            }
+        };
+        const openSettings = () => {
+            analyticsToggle.checked = getConsent() === 'accepted';
+            modal.hidden = false;
+            document.getElementById('cookie-settings-close').focus();
+        };
+        const closeSettings = () => { modal.hidden = true; };
+
+        refreshSettingsCopy();
+        document.addEventListener('zenqor:langchange', refreshSettingsCopy);
+
+        const consent = getConsent();
         if (consent === 'accepted') {
+            updateGoogleConsent(true);
+            settingsTrigger.hidden = false;
             applyGoogleAnalytics();
             logPageview();
-        } else if (consent === null && banner) {
+        } else if (consent === 'declined') {
+            updateGoogleConsent(false);
+            settingsTrigger.hidden = false;
+        } else {
             requestAnimationFrame(() => banner.classList.add('show'));
         }
 
-        if (acceptBtn) acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('zenqor-cookie-consent', 'accepted');
-            if (banner) banner.classList.remove('show');
-            applyGoogleAnalytics();
-            logPageview();
-        });
-        if (declineBtn) declineBtn.addEventListener('click', () => {
-            localStorage.setItem('zenqor-cookie-consent', 'declined');
-            if (banner) banner.classList.remove('show');
-        });
+        acceptBtn.addEventListener('click', () => setConsent('accepted'));
+        declineBtn.addEventListener('click', () => setConsent('declined'));
+        preferencesBtn.addEventListener('click', openSettings);
+        settingsTrigger.addEventListener('click', openSettings);
+        document.getElementById('cookie-settings-close').addEventListener('click', closeSettings);
+        document.getElementById('cookie-settings-reject').addEventListener('click', () => setConsent('declined'));
+        document.getElementById('cookie-settings-accept').addEventListener('click', () => setConsent('accepted'));
+        document.getElementById('cookie-settings-save').addEventListener('click', () => setConsent(analyticsToggle.checked ? 'accepted' : 'declined'));
+        modal.addEventListener('click', (event) => { if (event.target === modal) closeSettings(); });
+        document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !modal.hidden) closeSettings(); });
     }
 
     // ─────────────────────────────────────────────
