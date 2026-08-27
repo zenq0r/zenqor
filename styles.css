@@ -330,7 +330,7 @@ p { color: var(--text-secondary); }
 .pw-lightbox-next { right: -4px; top: 50%; transform: translateY(-50%); }
 .pw-lightbox-prev:hover, .pw-lightbox-next:hover { transform: translateY(-50%) scale(1.06); }
 .pw-lightbox-meta { text-align: center; max-width: 720px; }
-.pw-lightbox-meta h4 { font-size: 1.05rem; margin-bottom: 4px; }
+.pw-lightbox-meta h2 { font-size: 1.05rem; margin-bottom: 4px; }
 .pw-lightbox-meta p { color: var(--text-secondary); font-size: 0.85rem; margin: 0; }
 .pw-lightbox-counter { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.03em; }
 @media (max-width: 640px) {
