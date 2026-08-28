@@ -177,7 +177,7 @@ p { color: var(--text-secondary); }
    configuration genuinely needs more room. */
 @media (min-width: 1201px) {
     .nav-links {
-        min-inline-size: 720px;
+        min-inline-size: 800px;
         justify-content: flex-end;
     }
 }
