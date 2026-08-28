@@ -380,6 +380,11 @@
         document.dispatchEvent(new CustomEvent('zenqor:langchange', { detail: { lang } }));
     }
 
+    // Apply the saved language before waiting for remote CMS content. This
+    // prevents the header from first painting in one language and then moving
+    // when the saved language is applied after network requests finish.
+    setLanguage(currentLang);
+
     async function applyCompanyProfile() {
         if (!db) return;
         try {

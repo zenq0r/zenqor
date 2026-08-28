@@ -38,7 +38,12 @@
    2. RESET & TYPOGRAPHY & ACCESSIBILITY
    ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+    /* Reserve the scrollbar gutter from the first paint so fixed-width header
+       content does not resize when the page becomes scrollable. */
+    scrollbar-gutter: stable;
+}
 
 /* Focus Visible for Keyboard Navigation (WCAG) */
 *:focus-visible {
@@ -166,6 +171,16 @@ p { color: var(--text-secondary); }
 .lang-btn:hover { border-color: var(--primary-blue); color: var(--primary-blue); background: var(--primary-soft); }
 .mobile-menu-btn { display: none; font-size: 1.4rem; cursor: pointer; color: var(--text-primary); background: none; border: none; padding: 5px; }
 .nav-actions { display: flex; align-items: center; gap: 12px; margin-left: 10px; padding-left: 14px; border-left: 1px solid var(--border-color); }
+
+/* Keep desktop header geometry stable while Malay/English labels and
+   CMS-managed navigation finish loading. The menu can still grow if a future
+   configuration genuinely needs more room. */
+@media (min-width: 1201px) {
+    .nav-links {
+        min-inline-size: 720px;
+        justify-content: flex-end;
+    }
+}
 
 /* =========================================
    5. BUTTONS & FORMS
