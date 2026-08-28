@@ -408,10 +408,6 @@
 
             if (c.phone) {
                 const waDigits = c.phone.replace(/[^\d]/g, '');
-                document.querySelectorAll('#contactPhone').forEach(el => {
-                    el.textContent = c.phone;
-                    el.setAttribute('href', `https://wa.me/${waDigits}`);
-                });
                 document.querySelectorAll('#contactWhatsApp').forEach(el => el.setAttribute('href', `https://wa.me/${waDigits}`));
                 document.querySelectorAll('#contactCall').forEach(el => el.setAttribute('href', `tel:+${waDigits}`));
                 document.querySelectorAll('#contactWhatsAppNumber, #contactCallNumber').forEach(el => { el.textContent = c.phone; });
