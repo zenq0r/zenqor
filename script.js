@@ -445,17 +445,19 @@
 
     // ─────────────────────────────────────────────
     // 5b. GOOGLE ANALYTICS / TAG MANAGER
-    //    Fixed site-wide IDs plus an optional admin-configured override
-    //    (config/system_settings.ga). Both paths are gated on cookie consent
-    //    (see initCookieConsent below) — never loaded before the visitor accepts.
+    //    Google Analytics is installed statically in every page head so Google
+    //    can verify it. Only the GTM container is loaded after consent.
     // ─────────────────────────────────────────────
-    const GA_MEASUREMENT_ID = 'G-MZE85GGM3K';
     const GTM_CONTAINER_ID = 'GTM-WS9VHVP5';
     let trackingTagsLoaded = false;
 
     function loadFixedTrackingTags() {
         if (trackingTagsLoaded) return;
         trackingTagsLoaded = true;
+
+        // The homepage already has the same GTM snippet in its static markup.
+        // Do not add a second container when consent is granted.
+        if (document.querySelector(`script[src*="gtm.js?id=${GTM_CONTAINER_ID}"]`)) return;
 
         const gtmScript = document.createElement('script');
         gtmScript.textContent = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -464,44 +466,10 @@
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');`;
         document.head.appendChild(gtmScript);
-
-        const gaLoader = document.createElement('script');
-        gaLoader.async = true;
-        gaLoader.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-        document.head.appendChild(gaLoader);
-
-        const gaConfig = document.createElement('script');
-        gaConfig.textContent = `window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}');`;
-        document.head.appendChild(gaConfig);
     }
 
     async function applyGoogleAnalytics() {
         loadFixedTrackingTags();
-        if (!db) return;
-        try {
-            const { doc, getDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
-            const snap = await getDoc(doc(db, "config", "system_settings"));
-            if (!snap.exists()) return;
-            const gaId = snap.data().ga;
-            if (!gaId || gaId === GA_MEASUREMENT_ID) return;
-
-            const s1 = document.createElement('script');
-            s1.async = true;
-            s1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
-            document.head.appendChild(s1);
-
-            const s2 = document.createElement('script');
-            s2.textContent = `window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gaId}');`;
-            document.head.appendChild(s2);
-        } catch (e) {
-            console.warn("Google Analytics injection failed:", e);
-        }
     }
 
     // ─────────────────────────────────────────────
