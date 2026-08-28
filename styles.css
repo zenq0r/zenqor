@@ -217,7 +217,7 @@ p { color: var(--text-secondary); }
 .stat-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0 12px; }
 .stat-card:not(:last-child)::after { content: ''; position: absolute; top: 8px; right: 0; bottom: 8px; width: 1px; background: var(--border-color); }
 .stat-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--primary-soft); color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 4px; }
-.stat-card h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 2px; letter-spacing: -0.03em; }
+.stat-card .stat-value { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; line-height: 1.2; margin: 0 0 2px; letter-spacing: -0.03em; }
 .stat-card p { font-size: 0.82rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
 
 .tech-stack-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
