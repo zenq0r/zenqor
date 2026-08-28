@@ -194,7 +194,8 @@
             ph_name: "Name", ph_email: "Email Address", ph_msg: "Message Details", ph_phone: "Phone Number", ph_company: "Company Name (Optional)",
             opt_def: "Select Request Type", opt_1: "Business Registration", opt_2: "Licensing / Government Permit", opt_3: "HRMS/CDTS Digital System", opt_4: "Custom Software Consultation",
             btn_submit: "Send Request", btn_processing: "Processing...",
-            biz_hours_title: "Business Hours", biz_hours_weekday: "<strong>Mon - Fri:</strong> 9:00 AM - 6:00 PM", biz_hours_weekend: "Sat - Sun: Closed",
+            contact_chat: "Chat With Us", contact_call: "Call Us Now",
+            biz_hours_title: "Business Hours", biz_hours_weekday: "<strong>Mon - Fri:</strong> 8:00 AM - 5:30 PM", biz_hours_weekend: "Sat - Sun: Closed",
             loading_services: "Loading services...", loading_portfolio: "Synchronizing live portfolio data...", error_db: "Error connecting to database.",
 
             faq_page_title: "Frequently Asked Questions",
@@ -287,7 +288,8 @@
             ph_name: "Nama", ph_email: "Alamat Emel", ph_msg: "Butiran Mesej", ph_phone: "Nombor Telefon", ph_company: "Nama Syarikat (Pilihan)",
             opt_def: "Pilih Jenis Permintaan", opt_1: "Pendaftaran Perniagaan", opt_2: "Lesen / Permit Kerajaan", opt_3: "Sistem Digital HRMS/CDTS", opt_4: "Perundingan Perisian Tersuai",
             btn_submit: "Hantar Permintaan", btn_processing: "Sedang Diproses...",
-            biz_hours_title: "Waktu Operasi", biz_hours_weekday: "<strong>Isnin - Jumaat:</strong> 9:00 PG - 6:00 PTG", biz_hours_weekend: "Sabtu - Ahad: Tutup",
+            contact_chat: "Chat Dengan Kami", contact_call: "Hubungi Kami Sekarang",
+            biz_hours_title: "Waktu Operasi", biz_hours_weekday: "<strong>Isnin - Jumaat:</strong> 8:00 PG - 5:30 PTG", biz_hours_weekend: "Sabtu - Ahad: Tutup",
             loading_services: "Memuatkan perkhidmatan...", loading_portfolio: "Menyegerakkan data portfolio langsung...", error_db: "Ralat menyambung ke pangkalan data.",
 
             faq_page_title: "Soalan Lazim",
@@ -410,6 +412,9 @@
                     el.textContent = c.phone;
                     el.setAttribute('href', `https://wa.me/${waDigits}`);
                 });
+                document.querySelectorAll('#contactWhatsApp').forEach(el => el.setAttribute('href', `https://wa.me/${waDigits}`));
+                document.querySelectorAll('#contactCall').forEach(el => el.setAttribute('href', `tel:+${waDigits}`));
+                document.querySelectorAll('#contactWhatsAppNumber, #contactCallNumber').forEach(el => { el.textContent = c.phone; });
                 document.querySelectorAll('#floatingWhatsApp').forEach(el => {
                     el.setAttribute('href', `https://wa.me/${waDigits}`);
                 });

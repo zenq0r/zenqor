@@ -111,21 +111,31 @@
                         </div>
                         <div class="info-row">
                             <i class="fab fa-whatsapp text-accent" style="font-size: 1.2rem;" aria-hidden="true"></i>
-                            <p><a id="contactPhone" href="https://wa.me/601165012569" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; font-weight: 500;">+60 11 6501 2569</a></p>
+                            <p><a id="contactPhone" href="https://wa.me/601165012569" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp" style="color: inherit; text-decoration: none; font-weight: 500;">+60 11 6501 2569</a></p>
+                        </div>
+                        <div class="contact-direct-actions" aria-label="Direct contact options">
+                            <a id="contactWhatsApp" href="https://wa.me/601165012569" target="_blank" rel="noopener noreferrer" class="contact-direct-action contact-direct-action-chat">
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                <span><strong data-i18n="contact_chat">Chat With Us</strong><small id="contactWhatsAppNumber">+60 11 6501 2569</small></span>
+                            </a>
+                            <a id="contactCall" href="tel:+601165012569" class="contact-direct-action contact-direct-action-call">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                                <span><strong data-i18n="contact_call">Call Us Now</strong><small id="contactCallNumber">+60 11 6501 2569</small></span>
+                            </a>
                         </div>
                         <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 30px 0 20px;">
                         <h4 style="margin-bottom: 15px; font-size: 1.1rem;" data-i18n="biz_hours_title">Business Hours</h4>
                         <div class="info-row" style="margin-bottom: 10px;">
                             <i class="fas fa-clock text-accent" aria-hidden="true"></i>
                             <div>
-                                <p data-i18n="biz_hours_weekday"><strong>Mon - Fri:</strong> 9:00 AM - 6:00 PM</p>
+                                <p data-i18n="biz_hours_weekday"><strong>Mon - Fri:</strong> 8:00 AM - 5:30 PM</p>
                                 <p style="color: var(--text-secondary); font-size: 0.9rem;" data-i18n="biz_hours_weekend">Sat - Sun: Closed</p>
                             </div>
                         </div>
                         <div style="margin-top: 30px; display: flex; gap: 20px;">
-                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Join our Discord" style="color: var(--text-secondary); font-size: 1.6rem; transition: color 0.2s;" onmouseover="this.style.color='#5865F2'" onmouseout="this.style.color='var(--text-secondary)'"><i class="fab fa-discord"></i></a>
+                            <a href="#" aria-label="Visit our Facebook" style="color: var(--text-secondary); font-size: 1.6rem; transition: color 0.2s;" onmouseover="this.style.color='#1877F2'" onmouseout="this.style.color='var(--text-secondary)'"><i class="fab fa-facebook"></i></a>
                             <a href="https://github.com/zenq0r" target="_blank" rel="noopener noreferrer" aria-label="View our GitHub" style="color: var(--text-secondary); font-size: 1.6rem; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'"><i class="fab fa-github"></i></a>
-                            <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn" style="color: var(--text-secondary); font-size: 1.6rem; transition: color 0.2s;" onmouseover="this.style.color='#0A66C2'" onmouseout="this.style.color='var(--text-secondary)'"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="Visit our Instagram" style="color: var(--text-secondary); font-size: 1.6rem; transition: color 0.2s;" onmouseover="this.style.color='#E4405F'" onmouseout="this.style.color='var(--text-secondary)'"><i class="fab fa-instagram"></i></a>
                         </div>
                     </address>
                     
@@ -154,7 +164,7 @@
                         </div>
                         <div class="input-group">
                             <label for="form_select" class="visually-hidden" style="display: none;">Subject</label>
-                            <select id="form_select" name="subject" required aria-required="true">
+                            <select id="form_select" name="subject" required aria-required="true" aria-label="Select request type">
                                 <option value="" disabled selected data-i18n="opt_def">Select Request Type</option>
                                 <option data-i18n="opt_1">Business Registration</option>
                                 <option data-i18n="opt_2">Licensing / Government Permit</option>
