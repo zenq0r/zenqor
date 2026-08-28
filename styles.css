@@ -227,6 +227,8 @@ p { color: var(--text-secondary); }
 .contact-info, .contact-form { padding: 32px 28px; }
 .contact-info h3 { font-size: 1.2rem; margin-bottom: 20px; }
 .contact-info h4 { font-size: 1rem; }
+.legal-content h2 { color: var(--primary-blue); font-size: 1.05rem; margin: 26px 0 10px; }
+.legal-content h2:first-child { margin-top: 0; }
 .info-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
 .info-row i { font-size: 1.05rem; width: 20px; text-align: center; flex-shrink: 0; margin-top: 3px; }
 .info-row p { margin: 0; color: var(--text-secondary); }

@@ -37,9 +37,21 @@
     // script via innerHTML. Instead, allowlist-sanitize: keep only the small set
     // of tags/attributes these fields actually use, drop everything else down to
     // plain text, and block unsafe href schemes (javascript:, data:, etc.).
-    const RICH_TEXT_ALLOWED_TAGS = new Set(['A', 'BR', 'SPAN', 'STRONG', 'EM', 'B', 'I', 'H4', 'P', 'UL', 'LI']);
+    const RICH_TEXT_ALLOWED_TAGS = new Set(['A', 'BR', 'SPAN', 'STRONG', 'EM', 'B', 'I', 'H2', 'P', 'UL', 'LI']);
     const RICH_TEXT_ALLOWED_ATTRS = { A: ['href'], SPAN: ['class'] };
     const RICH_TEXT_SAFE_HREF = /^(https?:\/\/|mailto:|\/|#|[\w.-]+\.html)/i;
+    const POLICY_CONTENT_KEYS = new Set(['tos_content', 'rp_content']);
+
+    // Policy pages begin with a page H1. Their first content heading must
+    // therefore be H2, not H4. Normalising here also protects Firestore text
+    // overrides from reintroducing the same accessibility error.
+    function normalizePolicyHeadingLevels(key, value) {
+        if (!POLICY_CONTENT_KEYS.has(key)) return value;
+        return String(value == null ? '' : value)
+            .replace(/<h4\b[^>]*>/gi, '<h2>')
+            .replace(/<\/h4>/gi, '</h2>');
+    }
+
     function sanitizeRichText(html) {
         const template = document.createElement('template');
         template.innerHTML = String(html == null ? '' : html);
@@ -353,7 +365,7 @@
 
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
-            if(translations[lang] && translations[lang][key]) el.innerHTML = sanitizeRichText(translations[lang][key]);
+            if(translations[lang] && translations[lang][key]) el.innerHTML = sanitizeRichText(normalizePolicyHeadingLevels(key, translations[lang][key]));
         });
 
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
