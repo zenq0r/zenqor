@@ -24,9 +24,11 @@
         'analytics_storage': 'denied',
         'wait_for_update': 500
       });
+      gtag('set', 'url_passthrough', true);
+      gtag('set', 'ads_data_redaction', true);
       try {
         if (localStorage.getItem('zenqor-cookie-consent') === 'accepted') {
-          gtag('consent', 'update', { 'analytics_storage': 'granted' });
+          gtag('consent', 'update', { 'ad_storage': 'denied', 'ad_user_data': 'denied', 'ad_personalization': 'denied', 'analytics_storage': 'granted' });
         }
       } catch (error) { /* Storage may be unavailable in private browsing. */ }
     </script>
