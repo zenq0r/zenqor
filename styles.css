@@ -310,6 +310,7 @@ p { color: var(--text-secondary); }
 .our-clients-grid .port-img { transition: transform 0.45s var(--ease); }
 .our-clients-grid .port-content { padding: 16px 18px 18px; }
 .our-clients-grid .tag { margin-bottom: 8px; font-size: 0.68rem; padding: 4px 10px; }
+.our-clients-grid .portfolio-item h2,
 .our-clients-grid .portfolio-item h3 { font-size: 1.02rem; line-height: 1.35; }
 .our-clients-grid .port-meta { margin: 2px 0 6px; font-size: 0.76rem; }
 .our-clients-grid .portfolio-item p:not(.port-meta) { font-size: 0.85rem; line-height: 1.55; }
