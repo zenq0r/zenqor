@@ -296,15 +296,15 @@ p { color: var(--text-secondary); }
 .port-meta { font-size: 0.8rem; font-weight: 600; color: var(--primary-blue); margin: 4px 0 10px; }
 
 /* =========================================
-   2b. OUR CLIENTS — MEDIA GALLERY + LIGHTBOX
+   2b. MEDIA GALLERY + LIGHTBOX
    ========================================= */
-/* Our Client renders on the same base .portfolio-grid / .portfolio-item / .tag
-   styles as licensing_permit.html, so the two pages read as one design. The
-   only rules left here are the ones that exist because this page opens a media
+/* The gallery grid renders on the same base .portfolio-grid / .portfolio-item / .tag
+   styles as every other portfolio page. The
+   only rules here are the ones that exist because the page opens a media
    lightbox — the cards themselves are deliberately not styled differently. */
-.our-clients-grid .port-img-wrap { cursor: pointer; }
-.our-clients-grid .port-img { transition: transform 0.45s var(--ease); }
-.our-clients-grid .port-img-wrap:hover .port-img { transform: scale(1.045); }
+.gallery-grid .port-img-wrap { cursor: pointer; }
+.gallery-grid .port-img { transition: transform 0.45s var(--ease); }
+.gallery-grid .port-img-wrap:hover .port-img { transform: scale(1.045); }
 
 /* Media-count badge + play icon overlay, shown on the cover thumbnail when an
    item has 2+ attached media files (see renderGrid() in portfolio-web.html). */

@@ -92,7 +92,7 @@
 
         <section class="portfolio section-padding">
             <div class="container">
-                <div class="portfolio-grid" id="licensingPortfolioGrid" aria-live="polite">
+                <div class="portfolio-grid gallery-grid" id="licensingPortfolioGrid" aria-live="polite">
                     <div style="text-align: center; width: 100%; grid-column: 1 / -1; color: var(--text-secondary); padding: 40px;">
                         <i class="fas fa-circle-notch fa-spin fa-2x"></i>
                         <p style="margin-top: 15px;" data-i18n="loading_portfolio">Synchronizing live portfolio data...</p>
@@ -101,6 +101,22 @@
             </div>
         </section>
     </main>
+
+    <!-- Shared lightbox instance for browsing a client card's full media gallery
+         (images + MP4 video). Populated/opened via JS — see openLightbox() below. -->
+    <div class="pw-lightbox" id="pwLightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+        <div class="pw-lightbox-inner">
+            <div class="pw-lightbox-stage" id="pwLightboxStage">
+                <button type="button" class="pw-lightbox-close" id="pwLightboxClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
+                <button type="button" class="pw-lightbox-prev" id="pwLightboxPrev" aria-label="Previous media"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="pw-lightbox-next" id="pwLightboxNext" aria-label="Next media"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="pw-lightbox-meta">
+                <h2 id="pwLightboxTitle"></h2>
+                <p id="pwLightboxDesc"></p>
+            </div>
+            <div class="pw-lightbox-counter" id="pwLightboxCounter"></div>
+        </div>
 
     <footer role="contentinfo">
         <div class="container footer-content" style="margin-bottom: 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px;">
@@ -187,6 +203,18 @@
             return new Intl.DateTimeFormat(lang === 'ms' ? 'ms-MY' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(parsed);
         }
 
+        // Every item's gallery is normalised into a flat [{type,url}] array so the
+        // rest of the code (cover thumbnail, badge, lightbox) never has to branch
+        // on schema version. Live admin items carry data.media (new multi-media
+        // uploader); older live items and FALLBACK_ITEMS only have data.imgUrl.
+        function mediaListFor(data) {
+            if (Array.isArray(data.media) && data.media.length) {
+                return data.media.map((m) => ({ type: m.type === 'video' ? 'video' : 'image', url: m.url || '' })).filter((m) => m.url);
+            }
+            if (data.imgUrl) return [{ type: 'image', url: data.imgUrl }];
+            return [];
+        }
+
         function renderGrid(items) {
             loadedPortfolio = items;
             const lang = currentLang();
@@ -195,11 +223,18 @@
             let delay = 0;
             items.forEach((data) => {
                 const text = pick(data, lang);
+                const media = mediaListFor(data);
+                const cover = media[0];
                 const metaBits = [data.companyName, formatEventDate(data.eventDate, lang)].filter(Boolean);
                 const metaLine = metaBits.length ? `<p class="port-meta">${escapeHtml(metaBits.join(' · '))}</p>` : '';
+                const badge = media.length > 1 ? `<span class="media-count-badge"><i class="fas fa-images"></i>${media.length}</span>` : '';
+                const playOverlay = cover && cover.type === 'video' ? `<span class="media-play-overlay"><i class="fas fa-circle-play"></i></span>` : '';
                 grid.innerHTML += `
                     <article class="portfolio-item card-style reveal active hover-up" style="transition-delay: ${delay}s;">
-                        <div class="port-img-wrap"><img class="port-img" alt="${escapeHtml(text.title)} Project Image" loading="lazy"></div>
+                        <div class="port-img-wrap" role="button" tabindex="0" aria-label="Open ${escapeHtml(text.title)} media gallery">
+                            ${badge}${playOverlay}
+                            <img class="port-img" alt="${escapeHtml(text.title)} Project Image" loading="lazy">
+                        </div>
                         <div class="port-content">
                             <span class="tag">${escapeHtml(text.tag)}</span>
                             <h2>${escapeHtml(text.title)}</h2>
@@ -209,24 +244,97 @@
                     </article>`;
                 delay += 0.1;
             });
-            // Set src via the property (not an interpolated attribute string) for the same
-            // reason as before — and once each image loads, classify its own natural
-            // width/height ratio so the card's aspect-ratio (see .port-img-wrap in
-            // styles.css) follows THAT image's shape instead of force-cropping every
-            // upload into one fixed landscape strip.
-            Array.from(grid.querySelectorAll('.port-img')).forEach((el, i) => {
-                const url = items[i] && items[i].imgUrl;
-                if (!url) return;
-                el.addEventListener('load', () => {
-                    const wrap = el.parentElement;
-                    const ratio = el.naturalWidth / el.naturalHeight;
-                    wrap.classList.remove('orientation-portrait', 'orientation-square');
-                    if (ratio < 0.85) wrap.classList.add('orientation-portrait');
-                    else if (ratio <= 1.15) wrap.classList.add('orientation-square');
-                }, { once: true });
-                el.src = url;
+            const cards = Array.from(grid.querySelectorAll('.portfolio-item'));
+            cards.forEach((card, i) => {
+                const wrap = card.querySelector('.port-img-wrap');
+                const img = card.querySelector('.port-img');
+                const media = mediaListFor(items[i]);
+                const cover = media[0];
+                if (cover) {
+                    // Cover thumbnail always uses an <img>, even for a video item, so the
+                    // grid stays lightweight — the browser only loads video bytes once the
+                    // lightbox actually opens that slide.
+                    const posterUrl = cover.type === 'video' ? (media.find((m) => m.type === 'image') || {}).url : cover.url;
+                    if (cover.type === 'video' && !posterUrl) {
+                        wrap.classList.add('orientation-square');
+                        img.remove();
+                    } else {
+                        img.addEventListener('load', () => {
+                            const ratio = img.naturalWidth / img.naturalHeight;
+                            wrap.classList.remove('orientation-portrait', 'orientation-square');
+                            if (ratio < 0.85) wrap.classList.add('orientation-portrait');
+                            else if (ratio <= 1.15) wrap.classList.add('orientation-square');
+                        }, { once: true });
+                        img.src = posterUrl || cover.url;
+                    }
+                } else {
+                    img.remove();
+                }
+                const openThis = () => openLightbox(items[i], media, currentLang());
+                wrap.addEventListener('click', openThis);
+                wrap.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openThis(); } });
             });
         }
+
+
+        // ---- Lightbox: browse an item's full media gallery (images + MP4) ----
+        const lightboxEl = document.getElementById('pwLightbox');
+        const lightboxStage = document.getElementById('pwLightboxStage');
+        const lightboxTitle = document.getElementById('pwLightboxTitle');
+        const lightboxDesc = document.getElementById('pwLightboxDesc');
+        const lightboxCounter = document.getElementById('pwLightboxCounter');
+        let lightboxState = { media: [], index: 0, title: '', desc: '' };
+
+        function renderLightboxSlide() {
+            const { media, index, title, desc } = lightboxState;
+            const item = media[index];
+            Array.from(lightboxStage.querySelectorAll('img, video')).forEach((el) => el.remove());
+            if (item) {
+                const el = document.createElement(item.type === 'video' ? 'video' : 'img');
+                if (item.type === 'video') { el.src = item.url; el.controls = true; el.autoplay = true; el.playsInline = true; }
+                else { el.src = item.url; el.alt = title; }
+                lightboxStage.insertBefore(el, lightboxStage.firstChild);
+            }
+            lightboxTitle.textContent = title;
+            lightboxDesc.textContent = desc;
+            lightboxCounter.textContent = media.length > 1 ? `${index + 1} / ${media.length}` : '';
+            const showNav = media.length > 1;
+            document.getElementById('pwLightboxPrev').style.display = showNav ? '' : 'none';
+            document.getElementById('pwLightboxNext').style.display = showNav ? '' : 'none';
+        }
+
+        function openLightbox(data, media, lang) {
+            if (!media.length) return;
+            const text = pick(data, lang);
+            lightboxState = { media, index: 0, title: text.title, desc: text.desc };
+            renderLightboxSlide();
+            lightboxEl.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightboxEl.classList.remove('is-open');
+            document.body.style.overflow = '';
+            Array.from(lightboxStage.querySelectorAll('video')).forEach((v) => v.pause());
+        }
+
+        function stepLightbox(delta) {
+            const len = lightboxState.media.length;
+            if (!len) return;
+            lightboxState.index = (lightboxState.index + delta + len) % len;
+            renderLightboxSlide();
+        }
+
+        document.getElementById('pwLightboxClose').addEventListener('click', closeLightbox);
+        document.getElementById('pwLightboxPrev').addEventListener('click', () => stepLightbox(-1));
+        document.getElementById('pwLightboxNext').addEventListener('click', () => stepLightbox(1));
+        lightboxEl.addEventListener('click', (e) => { if (e.target === lightboxEl) closeLightbox(); });
+        document.addEventListener('keydown', (e) => {
+            if (!lightboxEl.classList.contains('is-open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            else if (e.key === 'ArrowLeft') stepLightbox(-1);
+            else if (e.key === 'ArrowRight') stepLightbox(1);
+        });
 
         async function loadPortfolio() {
             const grid = document.getElementById('licensingPortfolioGrid');
