@@ -296,24 +296,15 @@ p { color: var(--text-secondary); }
 .port-meta { font-size: 0.8rem; font-weight: 600; color: var(--primary-blue); margin: 4px 0 10px; }
 
 /* =========================================
-   2b. OUR CLIENTS — COMPACT GRID + MEDIA GALLERY + LIGHTBOX
-   Scoped to .our-clients-grid (portfolio-web.html only) so licensing_permit.html /
-   portfolio-gaming.html, which reuse the base .portfolio-grid/.portfolio-item/.tag
-   classes, are completely unaffected.
+   2b. OUR CLIENTS — MEDIA GALLERY + LIGHTBOX
    ========================================= */
-.our-clients-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: var(--space-sm); }
-.our-clients-grid .portfolio-item { border-radius: var(--radius-md); }
-.our-clients-grid .port-img-wrap { aspect-ratio: 4 / 3; cursor: pointer; }
-.our-clients-grid .port-img-wrap.orientation-portrait { aspect-ratio: 3 / 4; }
-.our-clients-grid .port-img-wrap.orientation-square { aspect-ratio: 1 / 1; }
-.our-clients-grid .port-img-wrap:hover .port-img { transform: scale(1.045); }
+/* Our Client renders on the same base .portfolio-grid / .portfolio-item / .tag
+   styles as licensing_permit.html, so the two pages read as one design. The
+   only rules left here are the ones that exist because this page opens a media
+   lightbox — the cards themselves are deliberately not styled differently. */
+.our-clients-grid .port-img-wrap { cursor: pointer; }
 .our-clients-grid .port-img { transition: transform 0.45s var(--ease); }
-.our-clients-grid .port-content { padding: 16px 18px 18px; }
-.our-clients-grid .tag { margin-bottom: 8px; font-size: 0.68rem; padding: 4px 10px; }
-.our-clients-grid .portfolio-item h2,
-.our-clients-grid .portfolio-item h3 { font-size: 1.02rem; line-height: 1.35; }
-.our-clients-grid .port-meta { margin: 2px 0 6px; font-size: 0.76rem; }
-.our-clients-grid .portfolio-item p:not(.port-meta) { font-size: 0.85rem; line-height: 1.55; }
+.our-clients-grid .port-img-wrap:hover .port-img { transform: scale(1.045); }
 
 /* Media-count badge + play icon overlay, shown on the cover thumbnail when an
    item has 2+ attached media files (see renderGrid() in portfolio-web.html). */
@@ -534,10 +525,9 @@ footer { border-top: 1px solid var(--border-color); padding: 30px 0 15px; backgr
     .why-choose-media-frame { max-height: 420px; }
     /* Tablet (iPad-width) comfort pass: the 4-up tech grid and 3-up portfolio
        grid get cramped between 769-1024px, so drop to 2 columns here. Excludes
-       .our-clients-grid (portfolio-web.html), which already handles its own
-       responsive columns via auto-fill. */
+       grid get cramped between 769-1024px, so drop to 2 columns here. */
     .tech-stack-container { grid-template-columns: repeat(2, 1fr); }
-    .portfolio-grid:not(.our-clients-grid) { grid-template-columns: repeat(2, 1fr); }
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
     .contact-grid { grid-template-columns: 1fr; }
 }
 
@@ -571,7 +561,6 @@ footer { border-top: 1px solid var(--border-color); padding: 30px 0 15px; backgr
     .hero-inner, .hero { padding-top: 100px; }
     .service-card, .tech-category, .contact-info, .contact-form { padding: 22px 18px; }
     .port-content { padding: 16px; }
-    .our-clients-grid .port-content { padding: 14px 16px 16px; }
 }
 
 .nav-logo-img { height: 34px; width: auto; margin-right: 10px; vertical-align: middle; }
