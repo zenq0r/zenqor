@@ -721,15 +721,7 @@
             navLinksContainer.innerHTML = `
                 <a href="index.html" data-i18n="nav_home">Home</a>
                 <a href="services.html" data-i18n="nav_services">Services</a>
-                <div class="nav-item-dropdown">
-                    <button class="dropdown-toggle" data-target="portfolio-menu" aria-expanded="false">
-                        <span data-i18n="nav_portfolio">Portfolio</span> <i class="fas fa-chevron-down" style="font-size: 0.8em; margin-left: 5px;"></i>
-                    </button>
-                    <div class="dropdown-menu" id="portfolio-menu">
-                        <a href="licensing_permit.html" data-i18n="nav_port_gaming">Licensing & Permits</a>
-                        <a href="portfolio-web.html" data-i18n="nav_port_web">Our Client</a>
-                    </div>
-                </div>
+                <a href="licensing_permit.html" data-i18n="nav_port_gaming">Licensing & Permits</a>
                 <a href="about.html" data-i18n="nav_about">About</a>
                 <a href="faq.html" data-i18n="nav_faq">FAQ</a>
                 <a href="contact.html" data-i18n="nav_contact">Contact</a>
