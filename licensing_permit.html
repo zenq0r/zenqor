@@ -333,6 +333,11 @@
         async function loadPortfolio() {
             const grid = document.getElementById('licensingPortfolioGrid');
             try {
+                // Ordered client-side, NOT with orderBy("eventDate"): a Firestore
+                // orderBy silently drops every document missing that field, so any
+                // record saved before eventDate existed would vanish from this public
+                // page. Fetch by createdAt (present on all of them), then sort by the
+                // date the card actually shows.
                 const q = query(collection(db, "portfolio_gaming"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
 
@@ -346,6 +351,24 @@
                     const item = doc.data();
                     if (mediaListFor(item).length) items.push(item);
                 });
+                // Newest work first. eventDate is the job's own date (permit issued,
+                // submission made); createdAt covers pre-eventDate records and breaks
+                // ties on the same day. Both are ISO-prefixed, so a string compare
+                // orders them correctly even when one is date-only. Mirrors
+                // sortGalleryItemsNewestFirst() in the portal's app.js.
+                // createdAt is a Firestore Timestamp on older records and an ISO
+                // string on newer ones; String(timestamp) is not date-comparable, so
+                // normalise before falling back to it.
+                const isoOf = (value) => {
+                    if (!value) return '';
+                    if (typeof value === 'string') return value;
+                    if (typeof value.toDate === 'function') { try { return value.toDate().toISOString(); } catch (e) { return ''; } }
+                    if (typeof value.seconds === 'number') return new Date(value.seconds * 1000).toISOString();
+                    return '';
+                };
+                const dateKey = (item) => String(item?.eventDate || isoOf(item?.createdAt) || '');
+                items.sort((a, b) => dateKey(b).localeCompare(dateKey(a))
+                    || isoOf(b.createdAt).localeCompare(isoOf(a.createdAt)));
                 renderGrid(items);
             } catch (error) {
                 console.error("Firebase Sync Error: ", error);
