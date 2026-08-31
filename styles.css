@@ -281,16 +281,19 @@ p { color: var(--text-secondary); }
 .tech-category ul li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--primary-blue); font-size: 0.75rem; }
 
 .portfolio-item { overflow: hidden; display: flex; flex-direction: column; }
-/* The wrapper's aspect-ratio adapts to each item's own image orientation (set via
-   JS after the image loads — see portfolio-web.html/licensing_permit.html), so a
-   portrait photo gets a taller card instead of being cropped into a landscape strip. */
-.port-img-wrap { position: relative; overflow: hidden; border-bottom: 1px solid var(--border-color); aspect-ratio: 16 / 9; background: var(--border-color); }
+/* A fixed media frame keeps the gallery grid stable while Portal-hosted files are
+   still loading. This prevents cards from jumping over one another on refresh;
+   the image itself is safely cropped with object-fit below. */
+.port-img-wrap { position: relative; overflow: hidden; border-bottom: 1px solid var(--border-color); aspect-ratio: 4 / 3; background: var(--surface-color-soft); }
 .port-img-wrap.orientation-portrait { aspect-ratio: 3 / 4; }
 .port-img-wrap.orientation-square { aspect-ratio: 1 / 1; }
 .port-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(5,5,5,0.55) 100%); }
 .port-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .port-content { padding: 20px; }
 .tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; background: var(--primary-soft); color: var(--primary-hover); padding: 5px 9px; border-radius: var(--radius-sm); display: inline-block; margin-bottom: 12px; border: 1px solid rgba(84, 169, 157, 0.24); }
+.portfolio-empty-state { grid-column: 1 / -1; padding: 42px 20px; border: 1px dashed var(--border-color-strong); border-radius: var(--radius-md); color: var(--text-secondary); text-align: center; }
+.portfolio-empty-state i { color: var(--primary-blue); font-size: 1.35rem; margin-bottom: 10px; }
+.portfolio-empty-state p { margin: 0; font-size: 0.92rem; }
 /* Company name + date line on portfolio-web.html/licensing_permit.html cards —
    sits between the title and the description, only rendered when the admin
    filled in Company Name/Date Conducted (see renderGrid's metaLine). */

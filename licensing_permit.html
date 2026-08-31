@@ -117,6 +117,7 @@
             </div>
             <div class="pw-lightbox-counter" id="pwLightboxCounter"></div>
         </div>
+    </div>
 
     <footer role="contentinfo">
         <div class="container footer-content" style="margin-bottom: 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px;">
@@ -165,25 +166,11 @@
             return String(value == null ? '' : value).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
         }
 
-        // Shown only if the admin hasn't added any licensing/permit portfolio items yet.
-        // Bilingual (en/ms) since the admin dashboard's "portfolio_gaming"
-        // collection (kept as-is — it's shared with zenqor-portal's admin UI and
-        // Firestore rules, so renaming it here would break that connection) has
-        // no per-language fields — live admin-added items stay single-language
-        // until that schema is extended.
-        const FALLBACK_ITEMS = [
-            { imgUrl: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800",
-              en: { tag: "COMPANY REGISTRATION", title: "SSM Company Registration", desc: "End-to-end company registration and business structuring for a growing event & activation studio." },
-              ms: { tag: "PENDAFTARAN SYARIKAT", title: "Pendaftaran Syarikat SSM", desc: "Pendaftaran syarikat menyeluruh dan penstrukturan perniagaan untuk studio acara & aktivasi yang sedang berkembang." } },
-            { imgUrl: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800",
-              en: { tag: "GOVERNMENT PERMIT", title: "JUPEM & CAAM Permit Applications", desc: "Managed government permit submissions and follow-ups on behalf of enterprise clients." },
-              ms: { tag: "PERMIT KERAJAAN", title: "Permohonan Permit JUPEM & CAAM", desc: "Menguruskan penyerahan permit kerajaan dan susulan bagi pihak klien korporat." } },
-            { imgUrl: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=800",
-              en: { tag: "COMPLIANCE", title: "Business Licensing & Compliance Review", desc: "Ongoing licensing renewal and regulatory compliance advisory for existing clients." },
-              ms: { tag: "PEMATUHAN", title: "Semakan Perlesenan & Pematuhan Perniagaan", desc: "Pembaharuan lesen berterusan dan nasihat pematuhan regulatori untuk klien sedia ada." } },
-        ];
-
-        let loadedPortfolio = FALLBACK_ITEMS;
+        // Zenqor Portal is the single content source for this gallery:
+        // Portal Website Content → Firestore portfolio_gaming → this public page.
+        // This page deliberately has no sample-media fallback, so every visible
+        // image or video is controlled by an authorised Portal editor.
+        let loadedPortfolio = [];
 
         function currentLang() { return localStorage.getItem('zenqor-lang') || 'en'; }
 
@@ -215,11 +202,24 @@
             return [];
         }
 
+        function renderEmptyState() {
+            const lang = currentLang();
+            const grid = document.getElementById('licensingPortfolioGrid');
+            const message = lang === 'ms'
+                ? 'Portfolio media akan dipaparkan selepas diterbitkan melalui Zenqor Portal.'
+                : 'Portfolio media will appear after it is published through Zenqor Portal.';
+            grid.innerHTML = `<div class="portfolio-empty-state"><i class="fas fa-images" aria-hidden="true"></i><p>${message}</p></div>`;
+        }
+
         function renderGrid(items) {
             loadedPortfolio = items;
             const lang = currentLang();
             const grid = document.getElementById('licensingPortfolioGrid');
             grid.innerHTML = "";
+            if (!items.length) {
+                renderEmptyState();
+                return;
+            }
             let delay = 0;
             items.forEach((data) => {
                 const text = pick(data, lang);
@@ -259,12 +259,6 @@
                         wrap.classList.add('orientation-square');
                         img.remove();
                     } else {
-                        img.addEventListener('load', () => {
-                            const ratio = img.naturalWidth / img.naturalHeight;
-                            wrap.classList.remove('orientation-portrait', 'orientation-square');
-                            if (ratio < 0.85) wrap.classList.add('orientation-portrait');
-                            else if (ratio <= 1.15) wrap.classList.add('orientation-square');
-                        }, { once: true });
                         img.src = posterUrl || cover.url;
                     }
                 } else {
@@ -343,12 +337,15 @@
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
-                    renderGrid(FALLBACK_ITEMS);
+                    renderEmptyState();
                     return;
                 }
 
                 const items = [];
-                querySnapshot.forEach((doc) => items.push(doc.data()));
+                querySnapshot.forEach((doc) => {
+                    const item = doc.data();
+                    if (mediaListFor(item).length) items.push(item);
+                });
                 renderGrid(items);
             } catch (error) {
                 console.error("Firebase Sync Error: ", error);
