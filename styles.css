@@ -298,11 +298,20 @@ p { color: var(--text-secondary); }
     position: absolute; inset: 0; z-index: 0;
     width: 100%; height: 100%; object-fit: cover; display: block;
     opacity: 0; pointer-events: none;
+    /* Stated rather than left to the default: the whole effect is the frame
+       opening outward from its middle, so the origin is load-bearing here. */
+    transform-origin: center center;
 }
-/* The transition is declared only on the visible state, so removing the class
-   snaps the layer back to transparent instead of fading out again — by that point
-   the base <img> already holds the same frame, so nothing moves on screen. */
-.port-cover-fade.is-visible { opacity: 1; transition: opacity 900ms var(--ease); }
+/* The top layer carries the OUTGOING frame. It is armed opaque and unscaled, then
+   dissolves outward — fading away while growing from its centre — uncovering the
+   incoming frame already sitting on the base <img> underneath. transform-origin is
+   the default centre, which is what makes it read as opening from the inside out. */
+.port-cover-fade.is-armed { opacity: 1; transform: scale(1); }
+.port-cover-fade.is-dissolving {
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 1100ms var(--ease), transform 1100ms var(--ease);
+}
 .port-content { padding: 20px; }
 .tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; background: var(--primary-soft); color: var(--primary-hover); padding: 5px 9px; border-radius: var(--radius-sm); display: inline-block; margin-bottom: 12px; border: 1px solid rgba(84, 169, 157, 0.24); }
 .portfolio-empty-state { grid-column: 1 / -1; padding: 42px 20px; border: 1px dashed var(--border-color-strong); border-radius: var(--radius-md); color: var(--text-secondary); text-align: center; }
@@ -321,11 +330,11 @@ p { color: var(--text-secondary); }
    only rules here are the ones that exist because the page opens a media
    lightbox — the cards themselves are deliberately not styled differently. */
 .gallery-grid .port-img-wrap { cursor: pointer; }
-.gallery-grid .port-img,
-.gallery-grid .port-cover-fade { transition: transform 0.45s var(--ease); }
-/* Both layers scale together, or the two would visibly desync mid-crossfade. */
-.gallery-grid .port-img-wrap:hover .port-img,
-.gallery-grid .port-img-wrap:hover .port-cover-fade { transform: scale(1.045); }
+.gallery-grid .port-img { transition: transform 0.45s var(--ease); }
+.gallery-grid .port-img-wrap:hover .port-img { transform: scale(1.045); }
+/* The dissolving layer is deliberately left out of the hover zoom: it runs its own
+   transform, and a second rule competing for the same property would cut the
+   dissolve short. The slideshow pauses on hover anyway, so the two never overlap. */
 
 /* Media-count badge + play icon overlay, shown on the cover thumbnail when an
    item has 2+ attached media files (see renderGrid() in portfolio-web.html). */

@@ -247,8 +247,8 @@
             let paused = false;
             let intervalTimer = null;
             let startTimer = null;
-            // The frame the fade layer is currently showing, handed to the base
-            // layer by the NEXT tick rather than by a callback of this one.
+            // Set while a dissolve is on screen. The NEXT tick clears it rather
+            // than a callback of this one — see settlePending.
             let pending = null;
 
             // Each tick finishes the previous tick's crossfade before starting its
@@ -262,8 +262,7 @@
             // fade layer is already showing the frame the base is about to take.
             const settlePending = () => {
                 if (!pending) return;
-                baseImg.src = pending.url;
-                fade.classList.remove('is-visible');
+                fade.classList.remove('is-armed', 'is-dissolving');
                 index = pending.index;
                 pending = null;
             };
@@ -272,22 +271,37 @@
                 settlePending();
                 const nextIndex = (index + 1) % images.length;
                 const nextUrl = images[nextIndex];
-                const reveal = () => {
-                    pending = { url: nextUrl, index: nextIndex };
-                    fade.classList.add('is-visible');
+                const currentUrl = images[index];
+
+                const dissolve = () => {
+                    // Cover the card with the frame that is on screen right now,
+                    // unanimated, then swap the base underneath to the incoming one.
+                    fade.classList.remove('is-dissolving');
+                    fade.src = currentUrl;
+                    fade.classList.add('is-armed');
+                    baseImg.src = nextUrl;
+                    // Flush the armed state before asking for the dissolve, or the
+                    // browser coalesces both class changes into one style pass and
+                    // there is no transition to run. Reading offsetWidth is the
+                    // synchronous way to force that flush; requestAnimationFrame
+                    // would not do here because it is paused in a hidden tab.
+                    void fade.offsetWidth;
+                    fade.classList.add('is-dissolving');
+                    pending = { index: nextIndex };
                 };
                 // A frame that never arrives simply does not get shown; index still
                 // moves on, so one dead URL costs a beat instead of stopping the card.
                 const skip = () => { index = nextIndex; };
-                fade.onload = null;
-                fade.onerror = null;
-                fade.src = nextUrl;
-                // Waiting for decode avoids fading an empty layer in over a good
-                // frame when the network is slow. onload/onerror rather than
-                // addEventListener so a superseded frame's handler is replaced
-                // outright and can never fire late against a newer one.
-                if (fade.complete && fade.naturalWidth) reveal();
-                else { fade.onload = reveal; fade.onerror = skip; }
+
+                // Preload the INCOMING frame on a throwaway image first. The base
+                // layer is uncovered the moment the dissolve finishes, so it has to
+                // already hold a decoded frame — swapping its src to something still
+                // downloading would flash an empty box behind the dissolve.
+                const incoming = new Image();
+                incoming.onload = dissolve;
+                incoming.onerror = skip;
+                incoming.src = nextUrl;
+                if (incoming.complete && incoming.naturalWidth) { incoming.onload = null; dissolve(); }
             };
 
             const tick = () => {
