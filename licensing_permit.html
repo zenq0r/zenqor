@@ -211,7 +211,130 @@
             grid.innerHTML = `<div class="portfolio-empty-state"><i class="fas fa-images" aria-hidden="true"></i><p>${message}</p></div>`;
         }
 
+        // ---- Auto-advancing card covers -------------------------------------
+        // A card whose gallery holds more than one IMAGE cycles its cover so the
+        // whole set is visible without opening the lightbox. Videos are skipped:
+        // the cover is an <img>, which cannot render one — a video item still
+        // shows its poster and its play overlay, unchanged.
+        const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const SLIDE_INTERVAL_MS = 4500;
+        const SLIDE_FADE_MS = 900;
+        let coverSlideshows = [];
+
+        function stopCoverSlideshows() {
+            coverSlideshows.forEach((stop) => stop());
+            coverSlideshows = [];
+        }
+
+        function isLightboxOpen() {
+            const el = document.getElementById('pwLightbox');
+            return Boolean(el && el.classList.contains('is-open'));
+        }
+
+        function startCoverSlideshow(wrap, baseImg, images, startOffsetMs) {
+            // Preload every frame up front. Without this the first cycle of each
+            // card fades in an image the browser has not fetched yet.
+            images.forEach((url) => { const pre = new Image(); pre.src = url; });
+
+            const fade = document.createElement('img');
+            fade.className = 'port-cover-fade';
+            fade.alt = '';
+            fade.setAttribute('aria-hidden', 'true');
+            wrap.appendChild(fade);
+
+            let index = 0;
+            let onScreen = false;
+            let paused = false;
+            let intervalTimer = null;
+            let startTimer = null;
+            // The frame the fade layer is currently showing, handed to the base
+            // layer by the NEXT tick rather than by a callback of this one.
+            let pending = null;
+
+            // Each tick finishes the previous tick's crossfade before starting its
+            // own. That is the whole point of the design: an earlier version settled
+            // from a transitionend event with a setTimeout as backup, and when
+            // neither arrived — which happens for real, a page that is never
+            // composited fires no transitionend at all — the layer stayed at
+            // opacity 1 and the card stopped cycling permanently. Here a missed
+            // event cannot wedge anything: the next tick repairs the state and
+            // carries on, and the display is correct in the meantime because the
+            // fade layer is already showing the frame the base is about to take.
+            const settlePending = () => {
+                if (!pending) return;
+                baseImg.src = pending.url;
+                fade.classList.remove('is-visible');
+                index = pending.index;
+                pending = null;
+            };
+
+            const advance = () => {
+                settlePending();
+                const nextIndex = (index + 1) % images.length;
+                const nextUrl = images[nextIndex];
+                const reveal = () => {
+                    pending = { url: nextUrl, index: nextIndex };
+                    fade.classList.add('is-visible');
+                };
+                // A frame that never arrives simply does not get shown; index still
+                // moves on, so one dead URL costs a beat instead of stopping the card.
+                const skip = () => { index = nextIndex; };
+                fade.onload = null;
+                fade.onerror = null;
+                fade.src = nextUrl;
+                // Waiting for decode avoids fading an empty layer in over a good
+                // frame when the network is slow. onload/onerror rather than
+                // addEventListener so a superseded frame's handler is replaced
+                // outright and can never fire late against a newer one.
+                if (fade.complete && fade.naturalWidth) reveal();
+                else { fade.onload = reveal; fade.onerror = skip; }
+            };
+
+            const tick = () => {
+                if (!onScreen || paused || document.hidden || isLightboxOpen()) return;
+                advance();
+            };
+
+            // Off-screen cards must not burn timers or bandwidth on slides nobody
+            // is looking at.
+            const observer = new IntersectionObserver((entries) => {
+                onScreen = entries.some((entry) => entry.isIntersecting);
+            }, { threshold: 0.25 });
+            observer.observe(wrap);
+
+            // Pointer or keyboard focus on a card means someone is reading it —
+            // hold the current frame until they move on.
+            const pause = () => { paused = true; };
+            const resume = () => { paused = false; };
+            wrap.addEventListener('mouseenter', pause);
+            wrap.addEventListener('mouseleave', resume);
+            wrap.addEventListener('focusin', pause);
+            wrap.addEventListener('focusout', resume);
+
+            // Stagger the start so the whole grid does not flip in lockstep.
+            startTimer = window.setTimeout(() => {
+                intervalTimer = window.setInterval(tick, SLIDE_INTERVAL_MS);
+            }, startOffsetMs);
+
+            return () => {
+                window.clearTimeout(startTimer);
+                window.clearInterval(intervalTimer);
+                observer.disconnect();
+                fade.onload = null;
+                fade.onerror = null;
+                wrap.removeEventListener('mouseenter', pause);
+                wrap.removeEventListener('mouseleave', resume);
+                wrap.removeEventListener('focusin', pause);
+                wrap.removeEventListener('focusout', resume);
+                fade.remove();
+            };
+        }
+
         function renderGrid(items) {
+            // renderGrid runs again on every language change, so the previous
+            // pass's timers and observers have to go or they accumulate and keep
+            // animating nodes that are no longer in the document.
+            stopCoverSlideshows();
             loadedPortfolio = items;
             const lang = currentLang();
             const grid = document.getElementById('licensingPortfolioGrid');
@@ -267,6 +390,14 @@
                 const openThis = () => openLightbox(items[i], media, currentLang());
                 wrap.addEventListener('click', openThis);
                 wrap.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openThis(); } });
+
+                // Only image slides can play in the cover <img>, so a card needs at
+                // least two of them to have anything to cycle through. Honour the
+                // visitor's reduced-motion setting: they get the static cover.
+                const slides = media.filter((m) => m.type === 'image').map((m) => m.url);
+                if (slides.length > 1 && img.isConnected && !REDUCED_MOTION.matches) {
+                    coverSlideshows.push(startCoverSlideshow(wrap, img, slides, i * 700));
+                }
             });
         }
 

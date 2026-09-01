@@ -289,6 +289,20 @@ p { color: var(--text-secondary); }
 .port-img-wrap.orientation-square { aspect-ratio: 1 / 1; }
 .port-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(5,5,5,0.55) 100%); }
 .port-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Cards holding more than one image advance their cover on their own — see
+   startCoverSlideshow() in licensing_permit.html. The incoming frame fades in on a
+   layer stacked above the settled <img>, so a slide change never flashes an empty
+   box the way swapping one element's src does. z-index 0 keeps it under the count
+   badge (2), the play overlay (1) and the ::after gradient. */
+.port-cover-fade {
+    position: absolute; inset: 0; z-index: 0;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    opacity: 0; pointer-events: none;
+}
+/* The transition is declared only on the visible state, so removing the class
+   snaps the layer back to transparent instead of fading out again — by that point
+   the base <img> already holds the same frame, so nothing moves on screen. */
+.port-cover-fade.is-visible { opacity: 1; transition: opacity 900ms var(--ease); }
 .port-content { padding: 20px; }
 .tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; background: var(--primary-soft); color: var(--primary-hover); padding: 5px 9px; border-radius: var(--radius-sm); display: inline-block; margin-bottom: 12px; border: 1px solid rgba(84, 169, 157, 0.24); }
 .portfolio-empty-state { grid-column: 1 / -1; padding: 42px 20px; border: 1px dashed var(--border-color-strong); border-radius: var(--radius-md); color: var(--text-secondary); text-align: center; }
@@ -307,8 +321,11 @@ p { color: var(--text-secondary); }
    only rules here are the ones that exist because the page opens a media
    lightbox — the cards themselves are deliberately not styled differently. */
 .gallery-grid .port-img-wrap { cursor: pointer; }
-.gallery-grid .port-img { transition: transform 0.45s var(--ease); }
-.gallery-grid .port-img-wrap:hover .port-img { transform: scale(1.045); }
+.gallery-grid .port-img,
+.gallery-grid .port-cover-fade { transition: transform 0.45s var(--ease); }
+/* Both layers scale together, or the two would visibly desync mid-crossfade. */
+.gallery-grid .port-img-wrap:hover .port-img,
+.gallery-grid .port-img-wrap:hover .port-cover-fade { transform: scale(1.045); }
 
 /* Media-count badge + play icon overlay, shown on the cover thumbnail when an
    item has 2+ attached media files (see renderGrid() in portfolio-web.html). */
