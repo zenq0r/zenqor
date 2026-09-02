@@ -1,0 +1,23 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "zenq0r.com" }],
+      "destination": "https://www.zenqor.com.my/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.zenq0r.com" }],
+      "destination": "https://www.zenqor.com.my/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "zenqor.com.my" }],
+      "destination": "https://www.zenqor.com.my/:path*",
+      "permanent": true
+    }
+  ]
+}
