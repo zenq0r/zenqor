@@ -736,7 +736,7 @@
 
             let btnHtml = "";
             if(headerConfig.buttonVisible !== false) {
-                btnHtml = `<a href="${escapeHtml(headerConfig.buttonUrl || "https://www.hrct.portal.zenqor.com.my/")}" class="btn btn-primary" style="background-color: ${escapeHtml(headerConfig.buttonColor || 'var(--primary-blue)')}; padding: 8px 20px; border-radius: 6px; text-decoration: none;">${escapeHtml(headerConfig.buttonTitle || "Portal")}</a>`;
+                btnHtml = `<a href="${escapeHtml(headerConfig.buttonUrl || "https://www.hrconnect.zenqor.com.my/")}" class="btn btn-primary" style="background-color: ${escapeHtml(headerConfig.buttonColor || 'var(--primary-blue)')}; padding: 8px 20px; border-radius: 6px; text-decoration: none;">${escapeHtml(headerConfig.buttonTitle || "Portal")}</a>`;
             }
 
             navLinksContainer.innerHTML = htmlBuild + `<div class="nav-actions">
@@ -753,7 +753,7 @@
                 <a href="contact.html" data-i18n="nav_contact">Contact</a>
                 <div class="nav-actions">
                     <button id="lang-toggle" class="lang-btn">EN</button>
-                    <a href="https://www.hrct.portal.zenqor.com.my/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" aria-label="Open HRMS/CDTS Portal (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square"></i>Portal</a>
+                    <a href="https://www.hrconnect.zenqor.com.my/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" aria-label="Open HRMS/CDTS Portal (opens in a new tab)"><i class="fas fa-arrow-up-right-from-square"></i>Portal</a>
                 </div>
             `;
         }
