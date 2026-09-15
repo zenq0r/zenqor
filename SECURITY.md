@@ -16,6 +16,6 @@ System security is our top priority at **Zenqor Technologies**.
 If you discover any bugs or security vulnerabilities on our website or systems, **PLEASE DO NOT** disclose them publicly in the GitHub *Issues* section.
 
 Please report them directly to us via private email at:
-📧 **admin@zenqor.com.my** or **operation@zenqor.com.my**
+📧 **info@zenqor.com.my** or **operation@zenqor.com.my**
 
 We will respond to your email within 48 hours and keep you updated on the status of the fix.
