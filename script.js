@@ -309,7 +309,7 @@
             process_2_t: "Dokumentasi", process_2_d: "Kami menyediakan dan menyusun semua borang serta dokumen sokongan yang diperlukan untuk permohonan anda.",
             process_3_t: "Penghantaran & Susulan", process_3_d: "Kami menghantar permohonan anda dan berhubung terus dengan pihak berkuasa berkaitan bagi pihak anda.",
             process_4_t: "Kelulusan & Penyerahan", process_4_d: "Setelah diluluskan, kami menyerahkan semua dokumen rasmi dan sedia membantu untuk sokongan berterusan.",
-            process_note: "Perundingan awal percuma &middot; Sebutharga telus sebelum sebarang kerja bermula",
+            process_note: "Perundingan awal percuma &middot; Sebut harga telus sebelum sebarang kerja bermula",
             cookie_text: "Kami menggunakan kuki penting untuk memastikan laman ini berfungsi. Dengan kebenaran anda, kuki analitik membantu kami memahami trafik laman. Lihat <a href=\"data-policy.html\">Polisi Data</a> kami untuk maklumat lanjut.",
             cookie_accept: "Terima analitik", cookie_decline: "Tolak", cookie_manage: "Urus pilihan",
 

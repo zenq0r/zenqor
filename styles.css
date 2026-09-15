@@ -448,6 +448,10 @@ p { color: var(--text-secondary); }
 .process-step h3 { font-size: 1.02rem; margin-bottom: 6px; }
 .process-step p { color: var(--text-secondary); font-size: 0.87rem; }
 .process-note { text-align: center; margin-top: var(--space-sm); color: var(--text-secondary); font-size: 0.9rem; }
+/* .section-header p {margin:0 auto} otherwise outranks .process-note's own
+   margin-top when the note sits inside a section-header (e.g. about.html's
+   founding-year note), since element+class beats a single class. */
+.section-header .process-note { margin-top: var(--space-sm); }
 .process-note i { color: var(--primary-blue); margin-right: 6px; }
 
 /* WHY CHOOSE US */
