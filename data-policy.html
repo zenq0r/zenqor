@@ -50,6 +50,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .legal-content h2 { color: var(--primary-blue); margin-top: 30px; margin-bottom: 12px; font-size: 1.18rem; }
+        .legal-content h2:first-child { margin-top: 0; }
+        .legal-content p, .legal-content li { color: var(--text-secondary); margin-bottom: 15px; line-height: 1.6; }
+        .legal-content ul { margin-left: 20px; margin-bottom: 20px; }
+        .legal-content a { color: var(--primary-blue); text-decoration: none; }
+        .legal-content a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
     <header class="navbar" role="banner">
@@ -84,14 +92,7 @@
 
         <section class="section-padding bg-alt">
             <div class="container">
-                <article class="card-style reveal" style="padding: 40px;">
-                    <h2 data-i18n="dp_title" style="color: var(--primary-blue); margin-bottom: 20px; font-size: 1.5rem;">Privacy & Data Protection</h2>
-                    <p data-i18n="dp_desc1" style="margin-bottom: 15px; color: var(--text-secondary); line-height: 1.6;">
-                        At Zenqor Technologies, system security and user privacy are our top priorities. We are committed to protecting the personal and business data you provide us in accordance with applicable data protection regulations.
-                    </p>
-                    <p data-i18n="dp_desc2" style="color: var(--text-secondary); line-height: 1.6;">
-                        We collect only essential information required to deliver our consulting, licensing, and digital system services. We do not sell or share your personal data with unauthorized third parties. For any vulnerability reports or data deletion requests, please contact us directly at info@zenqor.com.my.
-                    </p>
+                <article class="card-style reveal legal-content" style="padding: 40px;" data-i18n="dp_content">
                 </article>
             </div>
         </section>
