@@ -170,6 +170,7 @@
 
             about_title: "Your Trusted Partner <span class='text-primary'>in Business Growth</span>",
             about_sub: "We combine regulatory and licensing expertise with in-house technology to help businesses register, get licensed, stay compliant, and operate efficiently — all under one roof.",
+            about_founded_note: "Founded in 2026, Zenqor Technologies is run by a team bringing 10+ years of combined industry experience.",
             tech_1: "Business Registration", tech_2: "Licensing & Permits", tech_3: "HRMS/CDTS Systems", tech_4: "Compliance Advisory",
             tech_1_li1: "SSM Company Incorporation", tech_1_li2: "Business Structuring", tech_1_li3: "Partnership & Sdn Bhd Setup",
             tech_2_li1: "Government Permit Applications", tech_2_li2: "Business Licence Renewal", tech_2_li3: "Regulatory Submissions",
@@ -277,6 +278,7 @@
 
             about_title: "Rakan Kongsi Dipercayai <span class='text-primary'>Dalam Pertumbuhan Perniagaan</span>",
             about_sub: "Kami menggabungkan kepakaran regulatori dan perlesenan dengan teknologi dalaman untuk membantu perniagaan mendaftar, mendapat lesen, kekal patuh, dan beroperasi dengan cekap — semuanya di bawah satu bumbung.",
+            about_founded_note: "Ditubuhkan pada 2026, Zenqor Technologies dikendalikan oleh pasukan yang membawa pengalaman industri gabungan 10+ tahun.",
             tech_1: "Pendaftaran Perniagaan", tech_2: "Lesen & Permit", tech_3: "Sistem HRMS/CDTS", tech_4: "Nasihat Pematuhan",
             tech_1_li1: "Penubuhan Syarikat SSM", tech_1_li2: "Penstrukturan Perniagaan", tech_1_li3: "Penubuhan Perkongsian & Sdn Bhd",
             tech_2_li1: "Permohonan Permit Kerajaan", tech_2_li2: "Pembaharuan Lesen Perniagaan", tech_2_li3: "Penyerahan Regulatori",
