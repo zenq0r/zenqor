@@ -196,9 +196,21 @@
             });
         }
 
+        // getDocs() has no built-in timeout: if the request is blocked (ad
+        // blocker, restrictive network/firewall, offline persistence stuck)
+        // it can neither resolve nor reject, leaving the spinner forever
+        // instead of ever reaching the catch block below. Race it against a
+        // timeout so a stuck connection still falls back like any other error.
+        function withTimeout(promise, ms) {
+            return Promise.race([
+                promise,
+                new Promise((_, reject) => setTimeout(() => reject(new Error("Services fetch timed out")), ms)),
+            ]);
+        }
+
         async function loadServices() {
             try {
-                const snap = await getDocs(query(collection(db, "services"), orderBy("createdAt", "asc")));
+                const snap = await withTimeout(getDocs(query(collection(db, "services"), orderBy("createdAt", "asc"))), 8000);
                 if (snap.empty) {
                     renderServices(FALLBACK_SERVICES);
                     return;

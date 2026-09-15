@@ -475,6 +475,18 @@
             else if (e.key === 'ArrowRight') stepLightbox(1);
         });
 
+        // getDocs() has no built-in timeout: if the request is blocked (ad
+        // blocker, restrictive network/firewall, offline persistence stuck)
+        // it can neither resolve nor reject, leaving the spinner forever
+        // instead of ever reaching the catch block below. Race it against a
+        // timeout so a stuck connection still surfaces an error like any other.
+        function withTimeout(promise, ms) {
+            return Promise.race([
+                promise,
+                new Promise((_, reject) => setTimeout(() => reject(new Error("Portfolio fetch timed out")), ms)),
+            ]);
+        }
+
         async function loadPortfolio() {
             const grid = document.getElementById('licensingPortfolioGrid');
             try {
@@ -484,7 +496,7 @@
                 // page. Fetch by createdAt (present on all of them), then sort by the
                 // date the card actually shows.
                 const q = query(collection(db, "portfolio_gaming"), orderBy("createdAt", "desc"));
-                const querySnapshot = await getDocs(q);
+                const querySnapshot = await withTimeout(getDocs(q), 8000);
 
                 if (querySnapshot.empty) {
                     renderEmptyState();
