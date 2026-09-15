@@ -53,6 +53,22 @@ html {
     border-radius: 4px;
 }
 
+/* Hides an element visually while keeping it in the accessibility tree —
+   unlike display:none/visibility:hidden, which strip it from both. Used for
+   form <label>s that exist for screen readers but rely on a placeholder
+   for sighted users. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);

@@ -133,26 +133,26 @@
                         
                         <div class="form-row">
                             <div class="input-group">
-                                <label for="form_name" class="visually-hidden" style="display: none;">Name</label>
+                                <label for="form_name" class="visually-hidden">Name</label>
                                 <input type="text" id="form_name" name="name" data-i18n-placeholder="ph_name" placeholder="Name" required aria-required="true">
                             </div>
                             <div class="input-group">
-                                <label for="form_phone" class="visually-hidden" style="display: none;">Phone Number</label>
+                                <label for="form_phone" class="visually-hidden">Phone Number</label>
                                 <input type="tel" id="form_phone" name="phone" data-i18n-placeholder="ph_phone" placeholder="Phone Number" required aria-required="true">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="input-group">
-                                <label for="form_email" class="visually-hidden" style="display: none;">Email</label>
+                                <label for="form_email" class="visually-hidden">Email</label>
                                 <input type="email" id="form_email" name="email" data-i18n-placeholder="ph_email" placeholder="Email Address" required aria-required="true">
                             </div>
                             <div class="input-group">
-                                <label for="form_company" class="visually-hidden" style="display: none;">Company Name</label>
+                                <label for="form_company" class="visually-hidden">Company Name</label>
                                 <input type="text" id="form_company" name="company" data-i18n-placeholder="ph_company" placeholder="Company Name (Optional)">
                             </div>
                         </div>
                         <div class="input-group">
-                            <label for="form_select" class="visually-hidden" style="display: none;">Subject</label>
+                            <label for="form_select" class="visually-hidden">Subject</label>
                             <select id="form_select" name="subject" required aria-required="true" aria-label="Select request type">
                                 <option value="" disabled selected data-i18n="opt_def">Select Request Type</option>
                                 <option data-i18n="opt_1">Business Registration</option>
@@ -162,10 +162,11 @@
                             </select>
                         </div>
                         <div class="input-group">
-                            <label for="form_msg" class="visually-hidden" style="display: none;">Message</label>
+                            <label for="form_msg" class="visually-hidden">Message</label>
                             <textarea rows="5" id="form_msg" name="message" data-i18n-placeholder="ph_msg" placeholder="Message Details" required aria-required="true"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary w-100" data-i18n="btn_submit">Send Request</button>
+                        <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 12px; text-align: center;" data-i18n="form_privacy_note">By submitting this form, you agree to our <a href="data-policy.html">Data Policy</a> and consent to being contacted about your enquiry.</p>
                     </form>
                 </div>
                 
