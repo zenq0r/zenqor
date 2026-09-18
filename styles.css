@@ -72,9 +72,8 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
-    background-image: linear-gradient(rgba(13, 18, 25, 0.96), rgba(13, 18, 25, 0.98)), url('zenqorr.png');
-    background-size: cover;
-    background-position: center;
+    background-image: radial-gradient(ellipse 1200px 600px at 50% -10%, rgba(184, 198, 211, 0.06), transparent 60%);
+    background-repeat: no-repeat;
     background-attachment: fixed;
     color: var(--text-primary);
     line-height: 1.65;
@@ -482,12 +481,11 @@ p { color: var(--text-secondary); }
 /* The aspect-ratio/max-height box now lives on .why-choose-media-frame (not the
    outer .why-choose-media) so the name/title caption below it isn't squeezed into
    the same fixed box as the photo. */
-.why-choose-media-frame { aspect-ratio: 948 / 1660; width: 100%; max-height: 640px; background: var(--bg-color); }
-/* object-fit: contain (not cover) — this photo has its own "ZENQOR TECHNOLOGIES"
-   wordmark baked into the top of the frame, and cover was cropping it off the left
-   and right edges whenever the column was narrower than the source photo. contain
-   guarantees the full frame, wordmark included, is always visible. */
-.why-choose-media-frame img { width: 100%; height: 100%; object-fit: contain; display: block; border-radius: var(--radius-lg); }
+/* Cropped to 948/1295 (source is 948x1660) to cut off the top ~22% of the source
+   photo, which is a stylised wordmark treatment rather than the portrait itself —
+   object-position: bottom on the img below keeps the crop anchored on the face. */
+.why-choose-media-frame { aspect-ratio: 948 / 1295; width: 100%; max-height: 640px; background: var(--bg-color); overflow: hidden; border-radius: var(--radius-lg); }
+.why-choose-media-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center bottom; display: block; }
 /* Name/title caption under the portrait — identifies who's pictured instead of
    leaving the photo anonymous. */
 .why-choose-caption { text-align: center; margin-top: 14px; }
